@@ -1,12 +1,12 @@
 package snakeGame;
 
 
-public class Player extends Thread {
+public class ThreadPool extends Thread {
 
     private BlockingQueue taskQueue = null;
     private boolean       isStopped = false;
 
-    public Player(BlockingQueue queue){
+    public ThreadPool(BlockingQueue queue){
         taskQueue = queue;
     }
 

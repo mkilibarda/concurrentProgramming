@@ -6,16 +6,16 @@ import java.util.List;
 public class Server {
 
 	private BlockingQueue taskQueue = null;
-    private List<Player> threads = new ArrayList<Player>();
+    private List<ThreadPool> threads = new ArrayList<ThreadPool>();
     private boolean isStopped = false;
 
     public Server(int noOfThreads, int maxNoOfTasks){
         taskQueue = new BlockingQueue(maxNoOfTasks);
 
         for(int i=0; i<noOfThreads; i++){
-            threads.add(new Player(taskQueue));
+            threads.add(new ThreadPool(taskQueue));
         }
-        for(Player thread : threads){
+        for(ThreadPool thread : threads){
             thread.start();
         }
     }
@@ -29,7 +29,7 @@ public class Server {
 
     public synchronized void stop(){
         this.isStopped = true;
-        for(Player thread : threads){
+        for(ThreadPool thread : threads){
            thread.doStop();
         }
     }

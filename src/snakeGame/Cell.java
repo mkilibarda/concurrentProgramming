@@ -1,33 +1,58 @@
 package snakeGame;
 
-public class Cell extends Thread{
+public class Cell{
 	
 	private BlockingQueue taskQueue = null;
-    private boolean       isStopped = false;
-
+    private boolean       isEmpty = false;
+    private int x;
+    private int y;
+    
+    /*
+     * Constructor for the Cell class
+     * Creates a queue for all the thread if thread has multiple threads running in it
+     */
     public Cell(BlockingQueue queue){
         taskQueue = queue;
     }
-
-    public void run(){
-        while(!isStopped()){
-            try{
-                Runnable runnable = (Runnable) taskQueue.dequeue();
-                runnable.run();
-            } catch(Exception e){
-                //log or otherwise report exception,
-                //but keep pool thread alive.
-            }
-        }
+    
+    /*
+     * Set location for the cells to interact with the snake game.
+     */
+    public void setLocation(int xLo, int yLo){
+    	x = xLo;
+    	y = yLo;
     }
-
-    public synchronized void doStop(){
-        isStopped = true;
-        this.interrupt(); //break pool thread out of dequeue() call.
+    
+    /*
+     * Set the location of the x coordinates
+     * returns x
+     */
+    public int getX(){
+    	return x;
     }
-
-    public synchronized boolean isStopped(){
-        return isStopped;
+    
+    /*
+     * Set the location of the y coordinates
+     * returns y
+     */
+    public int getY(){
+    	return y;
+    }
+    
+    
+    /*
+     * breaks the thread out of queue to block
+     */
+    public synchronized void beingUsed(){
+        isEmpty = true;
+       
+    }
+    
+    /*
+     * stops the thread so it cannot be accessed
+     */
+    public synchronized void isLeaving(){
+        isEmpty = false;
     }
 	
 }

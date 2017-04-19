@@ -6,16 +6,16 @@ import java.util.List;
 public class ThreadPool {
 	
 	private BlockingQueue taskQueue = null;
-    private List<Cell> threads = new ArrayList<Cell>();
+    private List<Players> threads = new ArrayList<Players>();
     private boolean isStopped = false;
 
     public ThreadPool(int noOfThreads, int maxNoOfTasks){
         taskQueue = new BlockingQueue(maxNoOfTasks);
 
         for(int i=0; i<noOfThreads; i++){
-            threads.add(new Cell(taskQueue));
+            threads.add(new Players(taskQueue));
         }
-        for(Cell thread : threads){
+        for(Players thread : threads){
             thread.start();
         }
     }
@@ -31,7 +31,7 @@ public class ThreadPool {
     //use this code when time is finished for players to make move
     public synchronized void stop(){
         this.isStopped = true;
-        for(Cell thread : threads){
+        for(Players thread : threads){
            thread.doStop();
         }
     }

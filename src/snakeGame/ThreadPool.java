@@ -1,33 +1,41 @@
 package snakeGame;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class ThreadPool extends Thread {
+public class ThreadPool {
+	
+	private BlockingQueue taskQueue = null;
+    private List<Cell> threads = new ArrayList<Cell>();
+    private boolean isStopped = false;
 
-    private BlockingQueue taskQueue = null;
-    private boolean       isStopped = false;
+    public ThreadPool(int noOfThreads, int maxNoOfTasks){
+        taskQueue = new BlockingQueue(maxNoOfTasks);
 
-    public ThreadPool(BlockingQueue queue){
-        taskQueue = queue;
+        for(int i=0; i<noOfThreads; i++){
+            threads.add(new Cell(taskQueue));
+        }
+        for(Cell thread : threads){
+            thread.start();
+        }
     }
+    
+    //to place the threads back into the queue to be reused
+    public synchronized void  execute(Runnable task) throws Exception{
+        if(this.isStopped) throw
+            new IllegalStateException("Server is stopped");
 
-    public void run(){
-        while(!isStopped()){
-            try{
-                Runnable runnable = (Runnable) taskQueue.dequeue();
-                runnable.run();
-            } catch(Exception e){
-                //log or otherwise report exception,
-                //but keep pool thread alive.
-            }
+        this.taskQueue.enqueue(task);
+    }
+    
+    //use this code when time is finished for players to make move
+    public synchronized void stop(){
+        this.isStopped = true;
+        for(Cell thread : threads){
+           thread.doStop();
         }
     }
 
-    public synchronized void doStop(){
-        isStopped = true;
-        this.interrupt(); //break pool thread out of dequeue() call.
-    }
 
-    public synchronized boolean isStopped(){
-        return isStopped;
-    }
+    
 }

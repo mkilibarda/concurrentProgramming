@@ -11,8 +11,8 @@ public class Cell{
      * Constructor for the Cell class
      * Creates a queue for all the thread if thread has multiple threads running in it
      */
-    public Cell(BlockingQueue queue){
-        taskQueue = queue;
+    public Cell(){
+       
     }
     
     /*

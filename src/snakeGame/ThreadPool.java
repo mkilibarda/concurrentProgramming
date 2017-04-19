@@ -5,30 +5,34 @@ import java.util.List;
 
 public class ThreadPool {
 	
-	//private BlockingQueue taskQueue = null;
-    private List<Thread> threads = new ArrayList<Thread>();
+	private BlockingQueue taskQueue = null;
+    private List<PoolThread> threads = new ArrayList<PoolThread>();
     private boolean isStopped = false;
 
     public ThreadPool(int noOfThreads, int maxNoOfTasks){
-        //taskQueue = new BlockingQueue(maxNoOfTasks);
+        taskQueue = new BlockingQueue(maxNoOfTasks);
 
         for(int i=0; i<noOfThreads; i++){
-           threads.add(new Thread(new Player()));
+           threads.add(new PoolThread(taskQueue));
         }
         for(Thread thread : threads){
             thread.start();
         }
     }
-//    
-//    //to place the threads back into the queue to be reused
-//    public synchronized void  execute(Runnable task) throws Exception{
-//        if(this.isStopped) throw
-//            new IllegalStateException("Server is stopped");
-//
-//        //this.taskQueue.enqueue(task);
-//    }
-    
+    public synchronized void  execute(Player task) throws Exception{
+        if(this.isStopped) throw
+            new IllegalStateException("ThreadPool is stopped");
 
+        this.taskQueue.enqueue(task);
+    }
 
-    
+    public synchronized void stop(){
+        this.isStopped = true;
+        for(PoolThread thread : threads){
+           thread.doStop();
+        }
+    }
+
 }
+
+    

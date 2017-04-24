@@ -19,7 +19,7 @@ public class ThreadPool {
             thread.start();
         }
     }
-    public synchronized void  execute(Player task) throws Exception{
+    public synchronized void  execute(Snake task) throws Exception{
         if(this.isStopped) throw
             new IllegalStateException("ThreadPool is stopped");
 

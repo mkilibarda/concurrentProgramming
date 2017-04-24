@@ -1,9 +1,9 @@
 package snakeGame;
 
-public class Player implements Runnable{
+public class Snake implements Runnable{
 	
 
-	public Player(){
+	public Snake(){
 		
 	}
 

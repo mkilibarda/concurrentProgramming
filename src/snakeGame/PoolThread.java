@@ -12,7 +12,7 @@ public class PoolThread extends Thread {
     public void run(){
         while(!isStopped()){
             try{
-            	Player runnable = (Player) taskQueue.dequeue();
+            	Snake runnable = (Snake) taskQueue.dequeue();
                 runnable.run();
             } catch(Exception e){
                 //log or otherwise report exception,

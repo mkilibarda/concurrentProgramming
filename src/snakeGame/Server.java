@@ -7,6 +7,7 @@ public class Server {
 	
 
 	// movement schemes
+	// in order of UP / DOWN / LEFT / RIGHT
 	private int[] arrowKeys = new int[] { 38, 40, 37, 39 };
 	private int[] wasd = new int[] { 87, 83, 65, 68 };
 	

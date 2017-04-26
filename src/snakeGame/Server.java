@@ -14,6 +14,7 @@ public class Server {
 	
 	// The amount of AI Players
 	int AIPlayers;
+	CellList gameScreen = new CellList(100,100);
 	
 	// movement schemes
 	// in order of UP / DOWN / LEFT / RIGHT.

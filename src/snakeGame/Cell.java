@@ -11,18 +11,12 @@ public class Cell{
      * Constructor for the Cell class
      * Creates a queue for all the thread if thread has multiple threads running in it
      */
-    public Cell(){
-       
+    public Cell(int x, int y){
+       this.x = x;
+       this.y = y;
     }
     
-    /*
-     * Set location for the cells to interact with the snake game.
-     */
-    public void setLocation(int xLo, int yLo){
-    	x = xLo;
-    	y = yLo;
-    }
-    
+ 
     /*
      * Set the location of the x coordinates
      * returns x

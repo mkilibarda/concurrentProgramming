@@ -1,20 +1,21 @@
 package snakeGame;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Server {
-	
-	// Implement a list for all the Snake AI players to be stored
-	List<SnakeAI> comp = new ArrayList<SnakeAI>();
-	
-	// ThreadPool for the AI snakes
-	ThreadPool compPool;
+	CellList gameScreen = new CellList(100, 100);
 	
 	// The amount of AI Players
 	int AIPlayers;
-	CellList gameScreen = new CellList(100,100);
+	List<SnakeAI> comp = new ArrayList<SnakeAI>();
+	
+	// ThreadPool for the AI snakes
+	ThreadPool aiPool;
+	// ThreadPool for the workers
+	ThreadPool compPool;
 	
 	// movement schemes
 	// in order of UP / DOWN / LEFT / RIGHT.
@@ -31,55 +32,44 @@ public class Server {
 		// Create gamescreen
 		GameScreen ui = new GameScreen();
 		
-		// setup Human players
-		Snake player1 = new SnakePlayer(ui, 1, arrowKeys);
-		Snake player2 = new SnakePlayer(ui, 2, wasd);
-		
-		// Create threadPool for players (possibly not needed)
-		ThreadPool playerPool = new ThreadPool(2, 2);
-		playerPool.execute(player1);
-		playerPool.execute(player2);
-		
-		// create all AI players
-		createAI(ui, AIPlayers);
-		
-		// ThreadPool which will run the AI players Tasks
-		compPool = new ThreadPool(10, AIPlayers);
-		executeAI();
-		
-		// Every second allow the AI to make a decision on the direction to move
-		// Timer t = new Timer();
-		// t.schedule(new TimerTask() {
-		// public void run() {
-		// try {
-		// executeAI();
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-		// }, 0, 1000);
-		
+		compPool = new ThreadPool(4, AIPlayers);
+		// create all players
+		createSnakes(ui, AIPlayers);
 	}
 	
 	/*
 	 * Method to create and stored all AI snake players into the List called comp
 	 */
-	public void createAI(GameScreen ui, int noOfComps) {
+	public void createSnakes(GameScreen ui, int noOfComps) {
+		// creates real-player snakes (this will be changed later to be triggered by key-press on keyboard from UI)
+		Snake player1 = new SnakePlayer(ui, 1, arrowKeys);
+		Snake player2 = new SnakePlayer(ui, 2, wasd);
+		Thread snakePlayer1 = new Thread(player1);
+		Thread snakePlayer2 = new Thread(player2);
+		snakePlayer1.start();
+		snakePlayer2.start();
+		
+		// creates and populates a thread pool for AI, as 100 running threads for AI would be too much overhead,
+		// so simulating this with a pool that does 10 at a time is acceptable.
+		aiPool = new ThreadPool(10, AIPlayers);
+		//thread numbers start at 3 to accommodate for the (currently) 2 real-players
 		for (int i = 3; i < noOfComps + 3; i++) {
 			comp.add(new SnakeAI(ui, i));
 		}
-	}
-	
-	/**
-	 * Executes all the AI movements
-	 * 
-	 * @throws Exception
-	 */
-	public void executeAI() throws Exception {
-		for (int i = 0; i < comp.size(); i++) {
-			compPool.execute(comp.get(i));
-		}
+		// Every second allow the AI to make a decision on the direction to move
+		Timer t = new Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				try {
+					for (int i = 0; i < comp.size(); i++) {
+						aiPool.execute(comp.get(i));
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}, 0, 1000);
 	}
 	
 	/**
@@ -89,6 +79,6 @@ public class Server {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Server server = new Server(3);
+		Server server = new Server(5);
 	}
 }

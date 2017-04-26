@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class SnakeAI extends Snake {
 	private boolean running = true;
+	
 	/*
 	 * Constructor for the Snake AI. Need to have the Gamescreen, the snake number(for testing Purpose).
 	 */
@@ -21,9 +22,8 @@ public class SnakeAI extends Snake {
 	 * @see snakeGame.Snake#run()
 	 */
 	public void run() {
-		System.out.println(Thread.currentThread().getName() + " thread started");
-		
-		while (running) {
+		// System.out.println(Thread.currentThread().getName() + " thread started");
+		delay();
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(4);
 		
@@ -56,15 +56,16 @@ public class SnakeAI extends Snake {
 			}
 			
 		}
-		delay();
-		}
 	}
 	
+	/*
+	 * Delay function to lengthen the decision-making time of each snake very slightly.
+	 */
 	private void delay() {
 		int actualDelay;
 		try {
 			// thread to sleep for random milliseconds
-			actualDelay = randomWithRange(1000, 2000);
+			actualDelay = randomWithRange(100, 300);
 			// System.out.println("Actual delay is "+actualDelay);
 			Thread.sleep(actualDelay);
 		}

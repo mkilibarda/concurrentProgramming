@@ -15,7 +15,7 @@ public class ThreadPool {
         for(int i=0; i<noOfThreads; i++){
            threads.add(new PoolThread(taskQueue));
         }
-        for(Thread thread : threads){
+        for(PoolThread thread : threads){
             thread.start();
         }
     }

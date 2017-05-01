@@ -3,30 +3,18 @@ package snakeGame;
 
 public class Buffer {
 	
-	private String currentDirection = "";
+	private int next_direction = -1;
 	
 	public Buffer() {
 		
 	}
 	
-	void goUp() {
-		currentDirection = "up";
+	public synchronized void setMove(int move) {
+		next_direction = move;
 	}
 	
-	void goLeft() {
-		currentDirection = "up";
-	}
-	
-	void goDown() {
-		currentDirection = "up";
-	}
-	
-	void goRight() {
-		currentDirection = "up";
-	}
-	
-	String getcurrentDirection() {
-		return currentDirection;
+	int getcurrentDirection() {
+		return next_direction;
 		
 	}
 	

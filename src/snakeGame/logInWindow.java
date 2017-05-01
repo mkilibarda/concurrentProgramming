@@ -26,55 +26,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-public class logInWindow extends JFrame implements KeyListener{
+public class logInWindow implements KeyListener{
 
-	//private JFrame frame;
+	private JFrame frame;
 	private JPanel panelTop;
 	private JPanel panelCenter;
 	private JPanel panelBot;
 
-	private int playerOne, playerTwo, playerThree, playerFour = 0;
-	public int getPlayerOne() {
-		return playerOne;
-	}
-
-	public void setPlayerOne(int playerOne) {
-		this.playerOne = playerOne;
-	}
-
-	public int getPlayerTwo() {
-		return playerTwo;
-	}
-
-	public void setPlayerTwo(int playerTwo) {
-		this.playerTwo = playerTwo;
-	}
-
-	public int getPlayerThree() {
-		return playerThree;
-	}
-
-	public void setPlayerThree(int playerThree) {
-		this.playerThree = playerThree;
-	}
-
-	public int getPlayerFour() {
-		return playerFour;
-	}
-
-	public void setPlayerFour(int playerFour) {
-		this.playerFour = playerFour;
-	}
-
-	public int getAIPlayers() {
-		return AIPlayers;
-	}
-
-	public void setAIPlayers(int aIPlayers) {
-		AIPlayers = aIPlayers;
-	}
-
-	private int AIPlayers = 0;
+	private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 
 	private JPanel panelMid1 = new JPanel(new GridLayout(0, 4));
 	private JPanel panelMid2 = new JPanel(new GridLayout(0, 4));
@@ -92,23 +51,24 @@ public class logInWindow extends JFrame implements KeyListener{
 
 	public logInWindow(){
 
-		this.setName("Log In Window");
-		setBounds(450, 150, 475, 300);
-		setLayout(new GridLayout(3, 0));
+		frame = new JFrame("Log In Window");
+		//frame.setName("Log In Window");
+		frame.setBounds(450, 150, 475, 300);
+		frame.setLayout(new GridLayout(3, 0));
 
 		topFrameSettings();
 		centerFrameSettings();
 		bottomFrameSettings();
 
 		// Advises the window when 'x' is pressed then the window closes
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// The Frame cannot be resized
-		setResizable(false);
+		frame.setResizable(false);
 		// Make the keyListener active to this window
-		addKeyListener(this);
-		setFocusable(true);
+		frame.addKeyListener(this);
+		frame.setFocusable(true);
 		// Tells the frame that it is visible 
-		setVisible(true);
+		frame.setVisible(true);
 	}
 
 	public void topFrameSettings(){
@@ -119,7 +79,7 @@ public class logInWindow extends JFrame implements KeyListener{
 		JLabel snakeLabel = new JLabel();
 		snakeLabel.setIcon(snake);
 		panelTop.add(snakeLabel);
-		add(panelTop, BorderLayout.NORTH);
+		frame.add(panelTop, BorderLayout.NORTH);
 	}
 
 	public void centerFrameSettings(){
@@ -170,7 +130,7 @@ public class logInWindow extends JFrame implements KeyListener{
 		panelCenter.add(panelMid3);
 		panelCenter.add(panelMid4);
 
-		add(panelCenter, BorderLayout.CENTER);
+		frame.add(panelCenter, BorderLayout.CENTER);
 
 	}
 
@@ -215,9 +175,13 @@ public class logInWindow extends JFrame implements KeyListener{
 					System.out.println("Player Two: " + playerTwo);
 					System.out.println("Player Three: " + playerThree);
 					System.out.println("Player Four: " + playerFour);
-					dispose();
+					
 					gameWindow second = new gameWindow();
-					second.setVisible(true);
+					
+					
+					frame.dispose();
+					
+					
 				}
 			}
 		});
@@ -226,7 +190,7 @@ public class logInWindow extends JFrame implements KeyListener{
 		panelBot.add(panelBot1);
 		panelBot.add(panelBot2);
 		panelBot.add(panelBot3);
-		add(panelBot, BorderLayout.SOUTH);
+		frame.add(panelBot, BorderLayout.SOUTH);
 	}
 
 	@Override
@@ -314,10 +278,44 @@ public class logInWindow extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 
 	}
-
-	public static void main(String[] args) {
-		logInWindow rnew = new logInWindow();
-
+	
+	public int getPlayerOne() {
+		return playerOne;
 	}
 
+	public void setPlayerOne(int playerOne) {
+		this.playerOne = playerOne;
+	}
+
+	public int getPlayerTwo() {
+		return playerTwo;
+	}
+
+	public void setPlayerTwo(int playerTwo) {
+		this.playerTwo = playerTwo;
+	}
+
+	public int getPlayerThree() {
+		return playerThree;
+	}
+
+	public void setPlayerThree(int playerThree) {
+		this.playerThree = playerThree;
+	}
+
+	public int getPlayerFour() {
+		return playerFour;
+	}
+
+	public void setPlayerFour(int playerFour) {
+		this.playerFour = playerFour;
+	}
+
+	public int getAIPlayers() {
+		return AIPlayers;
+	}
+
+	public void setAIPlayers(int aIPlayers) {
+		AIPlayers = aIPlayers;
+	}
 }

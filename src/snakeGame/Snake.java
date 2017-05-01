@@ -3,7 +3,7 @@ package snakeGame;
 
 public class Snake implements Runnable {
 	//Implementation of GameScreen, snake number and alive;
-	GameScreen ui;
+	gameWindow gameW;
 	int snake_num;
 	boolean alive;
 
@@ -19,9 +19,9 @@ public class Snake implements Runnable {
 	/*
 	 * Constructor to create Snake object
 	 */
-	public Snake(GameScreen ui, int snake_num) {
+	public Snake(gameWindow gameW2, int snake_num) {
 		//		this.server = server;
-		this.ui = ui;
+		this.gameW = gameW;
 		this.snake_num = snake_num;
 		alive = true;
 	}

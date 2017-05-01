@@ -14,8 +14,8 @@ public class SnakePlayer extends Snake implements KeyListener {
 	 * the snake number(for testing Purpose) and the keys it will use
 	 * to move the snake.
 	 */
-	public SnakePlayer(GameScreen ui, int snake_num, int[] keys) {
-		super(ui, snake_num);
+	public SnakePlayer(gameWindow gameW, int snake_num, int[] keys) {
+		super(gameW, snake_num);
 		this.keys = keys;
 		// TODO Auto-generated constructor stub
 	}
@@ -26,7 +26,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 	 */
 	public void run() {
 		System.out.println(Thread.currentThread().getName() + " thread started");
-		ui.getMainFrame().addKeyListener(this);
+		gameW.getMainFrame().addKeyListener(this);
 	}
 	
 	/*

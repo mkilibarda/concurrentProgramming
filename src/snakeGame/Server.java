@@ -1,4 +1,6 @@
+
 package snakeGame;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -6,10 +8,11 @@ import java.util.TimerTask;
 
 
 public class Server {
-	CellList gameScreen = new CellList(100, 100);
+	private CellList gameScreen = new CellList(100, 100);
 	
 	// the amount of real players
-	int realPlayers;
+	int realPlayers = 4;
+//	private Thread[] currentRealPlayers = new Thread[4];
 	// The amount of AI Players
 	int AIPlayers;
 	List<SnakeAI> comp = new ArrayList<SnakeAI>();
@@ -28,39 +31,45 @@ public class Server {
 	// private int[] yhgj = new int[] { 89, 72, 71, 74 };
 	// private int[] plAndSymbols = new int[] { 80, 59, 76, 222 };
 	
+	gameWindow gameW;
+	logInWindow logInW;
+	
 	/*
 	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the number of AI needed.
 	 */
-	public Server(int real, int AI) throws Exception {
-		// Set AI player count
-		this.AIPlayers = AI;
-		this.realPlayers = real;
+	public Server() throws Exception {
 		
 		// Create gameWindow
-		gameWindow gameW = new gameWindow();
-		logInWindow logInW = new logInWindow();
+		gameW = new gameWindow(this);
+		logInW = new logInWindow(this);
 		
-		compPool = new ThreadPool(4, AIPlayers);
 		// create all players
-		createSnakes(gameW, AIPlayers);
+		// createSnakes(gameW, AIPlayers);
+	}
+	
+	public void startGame(int AIPlayers) {
+		createSnakeAI(AIPlayers);
+		gameW.showGameWindow();
+	}
+	
+	public void addSnakePlayer(int playerNumber) {
+		Snake player = new SnakePlayer(gameW, playerNumber, keyschemas[playerNumber-1]);
+		Thread snakePlayer = new Thread(player);
+//		currentRealPlayers[playerNumber-1] = snakePlayer;
+		snakePlayer.start();
 	}
 	
 	/*
 	 * Method to create all snakes and get them running.
 	 */
-	public void createSnakes(gameWindow gameW, int noOfComps) {
-		// creates real-player snakes (this will be changed later to be triggered by key-press on keyboard from UI)
-		for (int i = 0; i < realPlayers; i++) {
-			Snake player = new SnakePlayer(gameW, i + 1, keyschemas[i]);
-			Thread snakePlayer = new Thread(player);
-			snakePlayer.start();
-		}
+	public void createSnakeAI(int AIPlayers) {
+		compPool = new ThreadPool(4, AIPlayers);
 		
 		// creates and populates a thread pool for AI, as 100 running threads for AI would be too much overhead,
 		// so simulating this with a pool that does 10 at a time is acceptable.
 		aiPool = new ThreadPool(10, AIPlayers);
 		// thread numbers start at 5 to accommodate for the (currently) 4 real-players
-		for (int i = realPlayers; i < noOfComps + realPlayers; i++) {
+		for (int i = realPlayers; i < AIPlayers + realPlayers; i++) {
 			comp.add(new SnakeAI(gameW, i + 1));
 		}
 		// Every second allow the AI to make a decision on the direction to move
@@ -86,6 +95,6 @@ public class Server {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Server server = new Server(4, 5);
+		Server server = new Server();
 	}
 }

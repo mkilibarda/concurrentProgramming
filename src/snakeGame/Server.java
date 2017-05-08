@@ -15,7 +15,7 @@ public class Server {
 //	private Thread[] currentRealPlayers = new Thread[4];
 	// The amount of AI Players
 	int AIPlayers;
-	List<SnakeAI> comp = new ArrayList<SnakeAI>();
+	List<SnakeAI> aiList = new ArrayList<SnakeAI>();
 	
 	// ThreadPool for the AI snakes
 	ThreadPool aiPool;
@@ -70,15 +70,15 @@ public class Server {
 		aiPool = new ThreadPool(10, AIPlayers);
 		// thread numbers start at 5 to accommodate for the (currently) 4 real-players
 		for (int i = realPlayers; i < AIPlayers + realPlayers; i++) {
-			comp.add(new SnakeAI(gameW, i + 1));
+			aiList.add(new SnakeAI(gameW, i + 1));
 		}
 		// Every second allow the AI to make a decision on the direction to move
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {
 			public void run() {
 				try {
-					for (int i = 0; i < comp.size(); i++) {
-						aiPool.execute(comp.get(i));
+					for (int i = 0; i < aiList.size(); i++) {
+						aiPool.execute(aiList.get(i));
 					}
 				}
 				catch (Exception e) {

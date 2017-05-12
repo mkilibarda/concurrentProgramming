@@ -6,16 +6,16 @@ import java.util.List;
 public class ThreadPool {
 	
 	private BlockingQueue taskQueue = null;
-    private List<PoolThread> threads = new ArrayList<PoolThread>();
+    private List<WorkerThread> threads = new ArrayList<WorkerThread>();
     private boolean isStopped = false;
 
     public ThreadPool(int noOfThreads, int maxNoOfTasks){
         taskQueue = new BlockingQueue(maxNoOfTasks);
 
         for(int i=0; i<noOfThreads; i++){
-           threads.add(new PoolThread(taskQueue));
+           threads.add(new WorkerThread(taskQueue));
         }
-        for(PoolThread thread : threads){
+        for(WorkerThread thread : threads){
             thread.start();
         }
     }
@@ -28,7 +28,7 @@ public class ThreadPool {
 
     public synchronized void stop(){
         this.isStopped = true;
-        for(PoolThread thread : threads){
+        for(WorkerThread thread : threads){
            thread.doStop();
         }
     }

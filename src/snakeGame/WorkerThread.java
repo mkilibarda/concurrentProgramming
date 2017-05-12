@@ -1,11 +1,11 @@
 package snakeGame;
 
-public class PoolThread extends Thread {
+public class WorkerThread extends Thread {
 
     private BlockingQueue taskQueue = null;
     private boolean       isStopped = false;
 
-    public PoolThread(BlockingQueue queue){
+    public WorkerThread(BlockingQueue queue){
         taskQueue = queue;
     }
 

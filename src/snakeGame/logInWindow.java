@@ -36,9 +36,9 @@ public class logInWindow implements KeyListener {
 	private JLabel P12Label = new JLabel("Player One: ");
 	private JLabel P2Label = new JLabel("Press 'W'");
 	private JLabel P21Label = new JLabel("Player Two: ");
-	private JLabel P3Label = new JLabel("Press 'T'");
+	private JLabel P3Label = new JLabel("Press 'Y'");
 	private JLabel P31Label = new JLabel("Player Three: ");
-	private JLabel P4Label = new JLabel("Press 'I'");
+	private JLabel P4Label = new JLabel("Press 'P'");
 	private JLabel P41Label = new JLabel("Player Four: ");
 	
 	// private int[][] keyschemas;

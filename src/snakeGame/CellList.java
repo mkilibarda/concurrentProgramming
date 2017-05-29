@@ -29,7 +29,6 @@ public class CellList {
 	}
 	
 	public Cell getRandomStartingCell(){
-		Cell cell = null;
 		int minHeight = (int) (height*0.05);
 		int maxHeight = (int) (height*0.95);
 		

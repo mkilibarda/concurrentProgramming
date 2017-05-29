@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 
 public class Server {
-	private CellList gameScreen = new CellList(100, 100);
+	public CellList gameScreen = new CellList(100, 100);
 	List<Buffer> playerBuffer = new ArrayList<Buffer>();
 	
 	// the amount of real players

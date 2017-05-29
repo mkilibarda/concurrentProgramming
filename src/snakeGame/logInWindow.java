@@ -182,6 +182,9 @@ public class logInWindow implements KeyListener {
 		});
 		
 		panelBot2.add(startButton);
+		
+		JLabel panelBot3Label1 = new JLabel("*Press Tab 2x to be able to enter players again*");
+		panelBot3.add(panelBot3Label1);
 		panelBot.add(panelBot1);
 		panelBot.add(panelBot2);
 		panelBot.add(panelBot3);

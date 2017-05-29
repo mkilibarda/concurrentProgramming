@@ -1,6 +1,7 @@
 
 package snakeGame;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,82 +11,74 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
 
 public class gameWindow implements KeyListener, WindowListener {
-	
+
 	// private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 	private JFrame mainWindow;
-	
+
 	private Server server;
-	
+
+
 	public gameWindow(Server server) {
 		this.server = server;
+		this.
 		mainWindow = new JFrame("Snake Game");
-		mainWindow.setBounds(450, 150, 600, 800);
-		mainWindow.setLayout(new GridLayout(2, 0));
+		mainWindow.setSize(1900, 900);
+
+
+		GridLayout gameBoard = new GridLayout(100, 100, 0, 0);
+
+
+		for (int v = 0; v < 100; v++) {
+			for (int h = 0; h < 100; h++){
+				mainWindow.add(server.gameScreen.getCell(v, h).getCellPanel());
+			}
+		}
+
+		mainWindow.setLayout(gameBoard);
+
 		
-		// playerOne = getPlayerOne();
-		// playerTwo = getPlayerTwo();
-		// playerThree = getPlayerThree();
-		// playerFour = getPlayerFour();
-		// AIPlayers = getAIPlayers();
-		
-		// JPanel topPanel = new JPanel(new GridLayout(0, 2));
-		// JPanel botPanel = new JPanel();
-		//
-		// JButton buttonPause = new JButton("Pause");
-		// JButton buttonExit = new JButton("Exit");
-		//
-		// topPanel.add(buttonPause);
-		// topPanel.add(buttonExit);
-		//
-		// buttonExit.addActionListener(new ActionListener() {
-		//
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		//
-		// mainWindow.dispose();
-		// System.exit(0);
-		// }
-		// });
-		//
-		// mainWindow.add(topPanel);
-		// mainWindow.add(botPanel);
-		//
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
+	public void displayCellList(){
+
+
+
+	}
+
 	public void showGameWindow() {
 		mainWindow.setVisible(true);
 	}
-	
+
 	@Override
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
-			case KeyEvent.VK_ESCAPE:
-				System.exit(0);
-				break;
+		case KeyEvent.VK_ESCAPE:
+			System.exit(0);
+			break;
 		}
 		//
 		// int c = e.getKeyCode();
@@ -164,45 +157,45 @@ public class gameWindow implements KeyListener, WindowListener {
 		// }
 		//
 	}
-	
+
 	public JFrame getMainFrame() {
 		return mainWindow;
 	}
-	
+
 	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void windowDeiconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

@@ -52,6 +52,9 @@ public class Server {
 		createSnakeAI(AIPlayers);
 		gameW.showGameWindow();
 		
+		
+		
+		
 		// Every second allow the AI to make a decision on the direction to move
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {

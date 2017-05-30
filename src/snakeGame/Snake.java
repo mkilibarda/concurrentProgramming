@@ -27,9 +27,10 @@ public class Snake implements Runnable {
 		this.snake_num = snake_num;
 		alive = true;
 		screen = map;
-		snakeBody.add(new int[]{3,3});
-		snakeBody.add(new int[]{3,2});
-		snakeBody.add(new int[]{3,1});
+		int randomNum = 0 + (int)(Math.random() * 99); 
+		snakeBody.add(new int[]{randomNum,3});
+		snakeBody.add(new int[]{randomNum,2});
+		snakeBody.add(new int[]{randomNum,1});
 		this.direction = RIGHT;
 		this.next_direction = RIGHT;
 		setSnake();
@@ -100,6 +101,7 @@ public class Snake implements Runnable {
 			}
 		}
 		setSnake();
+		//testing puropose
 //		for(int i = 0; i < snakeBody.size();i++){
 //			System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
 //		}

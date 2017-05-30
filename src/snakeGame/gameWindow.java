@@ -47,8 +47,10 @@ public class gameWindow implements KeyListener, WindowListener {
 	}
 
 	public void displayCellList(){
-
-
+		mainWindow.revalidate();
+		mainWindow.repaint();
+		//mainWindow.setVisible(false);
+		//mainWindow.setVisible(true);
 
 	}
 

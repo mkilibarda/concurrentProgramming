@@ -75,6 +75,7 @@ public class Server {
 				catch (Exception e) {
 					e.printStackTrace();
 				}
+				gameW.displayCellList();
 			}
 		}, 0, 1000);
 	}
@@ -82,9 +83,9 @@ public class Server {
 	public void addSnakePlayer(int playerNumber) {
 		Buffer playerBuf = new Buffer(1);
 		playerBuffer.add(playerBuf);
-		Snake player = new SnakePlayer(gameW, playerNumber, keyschemas[playerNumber-1],playerBuf);
+		Snake player = new SnakePlayer(gameW, playerNumber,gameScreen, keyschemas[playerNumber-1],playerBuf);
 		Thread snakePlayer = new Thread(player);
-		workers.add(new Worker(playerBuf));
+		workers.add(new Worker(playerBuf, player));
 //		currentRealPlayers[playerNumber-1] = snakePlayer;
 		snakePlayer.start();
 	}
@@ -99,7 +100,7 @@ public class Server {
 		aiPool = new ThreadPool(10, AIPlayers);
 		// thread numbers start at 5 to accommodate for the (currently) 4 real-players
 		for (int i = realPlayers; i < AIPlayers + realPlayers; i++) {
-			comp.add(new SnakeAI(gameW, i + 1));
+			comp.add(new SnakeAI(gameW, i + 1,gameScreen));
 		}
 		
 		

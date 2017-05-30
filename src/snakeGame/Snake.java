@@ -7,60 +7,103 @@ public class Snake implements Runnable {
 	gameWindow gameW;
 	int snake_num;
 	boolean alive;
-
+	CellList screen;
 	// KEYS MAP
 	protected int direction = -1;
 	protected int next_direction = -1;
 
-	public final static int UP = 0;
-	public final static int DOWN = 1;
-	public final static int LEFT = 2;
-	public final static int RIGHT = 3;
+	public final static int UP = 1;
+	public final static int DOWN = 2;
+	public final static int LEFT = 3;
+	public final static int RIGHT = 4;
 	protected ArrayList<int[]> snakeBody = new ArrayList<int[]>();
 
 	/*
 	 * Constructor to create Snake object
 	 */
-	public Snake(gameWindow gameW, int snake_num) {
+	public Snake(gameWindow gameW, int snake_num, CellList map) {
 		// this.server = server;
 		this.gameW = gameW;
 		this.snake_num = snake_num;
 		alive = true;
+		screen = map;
 		snakeBody.add(new int[]{3,3});
 		snakeBody.add(new int[]{3,2});
 		snakeBody.add(new int[]{3,1});
+		this.direction = RIGHT;
+		this.next_direction = RIGHT;
+		setSnake();
 
 		// allLocation.add(new int[2] = {100,100});
 	}
-	
+	public void setSnake(){
+		for(int i = 0; i <snakeBody.size();i++){
+			screen.getCell(snakeBody.get(i)[0],snakeBody.get(i)[1]).beingUsed();
+		}
+	}
+
 	public int getLength() {
 		return snakeBody.size();
 	}
 
 	public void grow() {
 		// create 1more array behind same direction as last one
-		snakeBody.add(new int[] { snakeBody.get(getLength() - 1)[0], snakeBody.get(getLength() - 1)[1] });
+		//snakeBody.add(new int[] { snakeBody.get(getLength() - 1)[0], snakeBody.get(getLength() - 1)[1] });
 		// ArrayList<Integer > tem=new ArrayList< Integer>();
 		// tem.add(allLocation.get(allLocation.size()-1).get(0));
 		// tem.add(allLocation.get(allLocation.size()-1).get(1));
 	}
- 
-	
-	
-	public void move(int x, int y) {
+
+
+
+	public void move(int move) {
 		// last node go to second last node spot
-		for (int i = 0; i < this.snakeBody.size() - 1; i++) {
-			// at last one berak;
-			// if(){
-			// break;
-			// }
-			snakeBody.set(snakeBody.size() - 1 - i, snakeBody.get(snakeBody.size() - i));
+		System.out.println(move);
+		if(move == 1 && direction != DOWN){
+			
+			this.direction = UP;
+			snakeBody.add(0, new int[]{ snakeBody.get(0)[0] - 1,snakeBody.get(0)[1]});
+			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+			snakeBody.remove(snakeBody.size()-1);
+		}else if(move == 2 && direction != UP){
+			this.direction = DOWN;
+			snakeBody.add(0, new int[]{ snakeBody.get(0)[0] + 1,snakeBody.get(0)[1]});
+			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+			snakeBody.remove(snakeBody.size()-1);
+		}else if(move == 3 && direction != RIGHT){
+			this.direction = LEFT;
+			snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] - 1});
+			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+			snakeBody.remove(snakeBody.size()-1);
+		}else if(move == 4 && direction != LEFT){
+			this.direction = RIGHT;
+			snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] + 1});
+			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+			snakeBody.remove(snakeBody.size()-1);
+		}else{
+			if(next_direction == UP){
+				snakeBody.add(0, new int[]{ snakeBody.get(0)[0] - 1,snakeBody.get(0)[1]});
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else if(next_direction == DOWN){
+				snakeBody.add(0, new int[]{ snakeBody.get(0)[0] + 1,snakeBody.get(0)[1]});
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else if(next_direction == LEFT){
+				snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] - 1});
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else if(next_direction == RIGHT){
+				snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] + 1});
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}
 		}
-		// first one become
-		ArrayList<Integer> tem = new ArrayList<Integer>();
-		tem.add(x);
-		tem.add(y);
-		//snakeBody.set(0, tem);
+		setSnake();
+//		for(int i = 0; i < snakeBody.size();i++){
+//			System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
+//		}
+
 	}
 
 	@Override

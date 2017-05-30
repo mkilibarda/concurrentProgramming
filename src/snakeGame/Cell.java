@@ -57,7 +57,7 @@ public class Cell{
      */
     public synchronized void beingUsed(){
         isEmpty = true;
-       
+        cellPanel.setBackground(Color.black);
     }
     
     /*
@@ -65,6 +65,7 @@ public class Cell{
      */
     public synchronized void isLeaving(){
         isEmpty = false;
+        cellPanel.setBackground(Color.gray);
     }
 	
 }

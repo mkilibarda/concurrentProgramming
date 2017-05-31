@@ -62,7 +62,7 @@ public class Snake implements Runnable {
 		// tem.add(allLocation.get(allLocation.size()-1).get(1));
 	}
 	public void checkOOB(){
-		if(snakeBody.get(0)[0] < 0 || snakeBody.get(0)[0] > 100 || snakeBody.get(0)[1] < 0 || snakeBody.get(0)[1] > 100 ){
+		if(snakeBody.get(0)[0] == 0 || snakeBody.get(0)[0] == 100 || snakeBody.get(0)[1] == 0 || snakeBody.get(0)[1] == 100 ){
 			alive = false;
 		}
 	}
@@ -75,6 +75,7 @@ public class Snake implements Runnable {
 
 
 	public void move(int move) {
+		System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
 		// last node go to second last node spot
 		System.out.println(move);
 		if(move == 1 && direction != DOWN){

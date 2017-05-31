@@ -15,6 +15,7 @@ public class CellList {
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
 				cellList.add(new Cell(i,j));
+				
 			}
 		}
 	}

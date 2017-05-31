@@ -51,6 +51,13 @@ public class Server {
 	public void startGame(int AIPlayers) {
 		createSnakeAI(AIPlayers);
 		gameW.showGameWindow();
+		for(int i = 0; i < 100; i++){
+			for(int j = 0; j < 100; j++){
+				if(i == 0 || j == 0 || i == 99 || j == 99s)
+				gameScreen.getCell(i, j).beingUsed();;
+				
+			}
+		}
 		
 		
 		

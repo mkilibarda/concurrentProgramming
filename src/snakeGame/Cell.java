@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 public class Cell{
 	
 	private BlockingQueue taskQueue = null;
-    private boolean       isEmpty = false;
+    private boolean       isEmpty = true;
     private int x;
     private int y;
 
@@ -21,8 +21,8 @@ public class Cell{
        this.x = x;
        this.y = y;
        cellPanel = new JPanel();
-       
-       cellPanel.setBackground(Color.gray);
+       // cellPanel.setBorder(new LineBorder(Color.orange, 1));   // Set cell's border
+        cellPanel.setBackground(Color.gray);
     }
     
     public JPanel getCellPanel() {
@@ -43,7 +43,11 @@ public class Cell{
     	return x;
     }
     
-    /*
+    public boolean isEmpty() {
+		return isEmpty;
+	}
+
+	/*
      * Set the location of the y coordinates
      * returns y
      */
@@ -56,11 +60,10 @@ public class Cell{
      * breaks the thread out of queue to block
      */
     public synchronized void beingUsed(){
-        isEmpty = true;
-        cellPanel.setBackground(Color.darkGray);
+        isEmpty = false;
+        cellPanel.setBackground(Color.black);
     }
     public void setColor(int playerNum){
-        cellPanel.setBackground(Color.black);
     	if(playerNum == 1){
     		cellPanel.setBackground(Color.yellow);
     	}
@@ -80,7 +83,7 @@ public class Cell{
      * stops the thread so it cannot be accessed
      */
     public synchronized void isLeaving(){
-        isEmpty = false;
+        isEmpty = true;
         cellPanel.setBackground(Color.gray);
     }
 	

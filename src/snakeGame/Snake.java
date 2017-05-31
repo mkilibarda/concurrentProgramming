@@ -44,6 +44,11 @@ public class Snake implements Runnable {
 			screen.getCell(snakeBody.get(i)[0],snakeBody.get(i)[1]).beingUsed();
 		}
 	}
+	public void killSnake(){
+		for(int i = 0; i <snakeBody.size();i++){
+			screen.getCell(snakeBody.get(i)[0],snakeBody.get(i)[1]).isLeaving();
+		}
+	}
 
 	public int getLength() {
 		return snakeBody.size();
@@ -56,6 +61,16 @@ public class Snake implements Runnable {
 		// tem.add(allLocation.get(allLocation.size()-1).get(0));
 		// tem.add(allLocation.get(allLocation.size()-1).get(1));
 	}
+	public void checkOOB(){
+		if(snakeBody.get(0)[0] < 0 || snakeBody.get(0)[0] > 100 || snakeBody.get(0)[1] < 0 || snakeBody.get(0)[1] > 100 ){
+			alive = false;
+		}
+	}
+	public void checkCollision(){
+		if(screen.getCell(snakeBody.get(0)[0],snakeBody.get(0)[1]).isEmpty() == false){
+			alive = false;
+		}
+	}
 
 
 
@@ -67,48 +82,101 @@ public class Snake implements Runnable {
 			this.direction = UP;
 			//move head to next cell
 			snakeBody.add(0, new int[]{ snakeBody.get(0)[0] - 1,snakeBody.get(0)[1]});
-			//set last cell to leaving
-			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-			snakeBody.remove(snakeBody.size()-1);
+			checkOOB();
+			checkCollision();
+			if(alive == true){
+				//set last cell to leaving
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else{
+				snakeBody.remove(0);
+			}
 		}else if(move == 2 && direction != UP){
 			this.direction = DOWN;
 			snakeBody.add(0, new int[]{ snakeBody.get(0)[0] + 1,snakeBody.get(0)[1]});
-			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-			snakeBody.remove(snakeBody.size()-1);
+			checkOOB();
+			checkCollision();
+			if(alive == true){
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else{
+				snakeBody.remove(0);
+			}
 		}else if(move == 3 && direction != RIGHT){
 			this.direction = LEFT;
+
 			snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] - 1});
-			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-			snakeBody.remove(snakeBody.size()-1);
+			checkOOB();
+			checkCollision();
+			if(alive == true){
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else{
+				snakeBody.remove(0);
+			}
 		}else if(move == 4 && direction != LEFT){
 			this.direction = RIGHT;
 			snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] + 1});
-			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-			snakeBody.remove(snakeBody.size()-1);
+			checkOOB();
+			checkCollision();
+			if(alive == true){
+				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+				snakeBody.remove(snakeBody.size()-1);
+			}else{
+				snakeBody.remove(0);
+			}
 		}else{
 			if(next_direction == UP){
 				snakeBody.add(0, new int[]{ snakeBody.get(0)[0] - 1,snakeBody.get(0)[1]});
-				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-				snakeBody.remove(snakeBody.size()-1);
+				checkOOB();
+				checkCollision();
+				if(alive == true){
+					screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+					snakeBody.remove(snakeBody.size()-1);
+				}else{
+					snakeBody.remove(0);
+				}
 			}else if(next_direction == DOWN){
 				snakeBody.add(0, new int[]{ snakeBody.get(0)[0] + 1,snakeBody.get(0)[1]});
-				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-				snakeBody.remove(snakeBody.size()-1);
+				checkOOB();
+				checkCollision();
+				if(alive == true){
+					screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+					snakeBody.remove(snakeBody.size()-1);
+				}else{
+					snakeBody.remove(0);
+				}
 			}else if(next_direction == LEFT){
 				snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] - 1});
-				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-				snakeBody.remove(snakeBody.size()-1);
+				checkOOB();
+				checkCollision();
+				if(alive == true){
+					screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+					snakeBody.remove(snakeBody.size()-1);
+				}else{
+					snakeBody.remove(0);
+				}
 			}else if(next_direction == RIGHT){
 				snakeBody.add(0, new int[]{ snakeBody.get(0)[0],snakeBody.get(0)[1] + 1});
-				screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
-				snakeBody.remove(snakeBody.size()-1);
+				checkOOB();
+				checkCollision();
+				if(alive == true){
+					screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
+					snakeBody.remove(snakeBody.size()-1);
+				}else{
+					snakeBody.remove(0);
+				}
 			}
 		}
-		setSnake();
+		if(alive == false){
+			killSnake();
+		}else{
+			setSnake();
+		}
 		//testing puropose
-//		for(int i = 0; i < snakeBody.size();i++){
-//			System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
-//		}
+		//		for(int i = 0; i < snakeBody.size();i++){
+		//			System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
+		//		}
 
 	}
 

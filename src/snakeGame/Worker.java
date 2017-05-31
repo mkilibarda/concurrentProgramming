@@ -8,7 +8,9 @@ public class Worker implements Runnable {
 		this.player = aPlayer;
 	}
 	public void run() {
+		if(player.alive == true){
 			int v = buffer.take();
 			player.move(v);
-		} 
+		}
+	} 
 }

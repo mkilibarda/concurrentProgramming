@@ -57,9 +57,10 @@ public class Cell{
      */
     public synchronized void beingUsed(){
         isEmpty = true;
-        cellPanel.setBackground(Color.black);
+        cellPanel.setBackground(Color.darkGray);
     }
     public void setColor(int playerNum){
+        cellPanel.setBackground(Color.black);
     	if(playerNum == 1){
     		cellPanel.setBackground(Color.yellow);
     	}

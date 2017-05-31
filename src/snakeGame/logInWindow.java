@@ -161,18 +161,14 @@ public class logInWindow implements KeyListener {
 				
 				AIPlayers = Integer.parseInt(panelBotTextField.getText().toString());
 				
-				if (AIPlayers > 100) {
+				if(AIPlayers > 100){
 					JOptionPane.showMessageDialog(panelBot, "There can only be 100 AI Players.");
 					panelBotTextField.setText("");
-				} else {
+				}else if(AIPlayers <= 0){
+					JOptionPane.showMessageDialog(panelBot, "There have to be more than 0 AI Players.");
+					panelBotTextField.setText("");
+				}else{
 					System.out.println("AI Players: " + AIPlayers);
-					System.out.println("---- If '1' then player is in, otherwise is not ----");
-//					System.out.println("Player One: " + playerOne);
-//					System.out.println("Player Two: " + playerTwo);
-//					System.out.println("Player Three: " + playerThree);
-//					System.out.println("Player Four: " + playerFour);
-					
-					// gameWindow second = new gameWindow();
 					
 					server.startGame(AIPlayers);
 					frame.dispose();

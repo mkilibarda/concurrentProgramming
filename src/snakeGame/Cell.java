@@ -59,6 +59,21 @@ public class Cell{
         isEmpty = true;
         cellPanel.setBackground(Color.black);
     }
+    public void setColor(int playerNum){
+    	if(playerNum == 1){
+    		cellPanel.setBackground(Color.yellow);
+    	}
+    	if(playerNum == 2){
+    		cellPanel.setBackground(Color.blue);
+    	}
+    	if(playerNum == 3){
+    		cellPanel.setBackground(Color.red);
+    	}
+    	if(playerNum == 4){
+    		cellPanel.setBackground(Color.green);
+    	}
+    	
+    }
     
     /*
      * stops the thread so it cannot be accessed

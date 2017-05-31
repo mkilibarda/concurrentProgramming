@@ -38,7 +38,9 @@ public class Snake implements Runnable {
 		// allLocation.add(new int[2] = {100,100});
 	}
 	public void setSnake(){
-		for(int i = 0; i <snakeBody.size();i++){
+		screen.getCell(snakeBody.get(0)[0],snakeBody.get(0)[1]).beingUsed();
+		screen.getCell(snakeBody.get(0)[0],snakeBody.get(0)[1]).setColor(snake_num);
+		for(int i = 1; i <snakeBody.size();i++){
 			screen.getCell(snakeBody.get(i)[0],snakeBody.get(i)[1]).beingUsed();
 		}
 	}
@@ -61,9 +63,11 @@ public class Snake implements Runnable {
 		// last node go to second last node spot
 		System.out.println(move);
 		if(move == 1 && direction != DOWN){
-			
+			//set direction of snake
 			this.direction = UP;
+			//move head to next cell
 			snakeBody.add(0, new int[]{ snakeBody.get(0)[0] - 1,snakeBody.get(0)[1]});
+			//set last cell to leaving
 			screen.getCell(snakeBody.get(snakeBody.size()-1)[0], snakeBody.get(snakeBody.size()-1)[1]).isLeaving();
 			snakeBody.remove(snakeBody.size()-1);
 		}else if(move == 2 && direction != UP){

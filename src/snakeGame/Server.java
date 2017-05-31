@@ -63,11 +63,6 @@ public class Server {
 					for (int i = 0; i < comp.size(); i++) {
 						aiPool.execute(comp.get(i));
 					}
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				try {
 					for (int i = 0; i < workers.size(); i++) {
 						workerPool.execute(workers.get(i));
 					}

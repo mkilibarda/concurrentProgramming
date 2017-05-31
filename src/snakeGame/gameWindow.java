@@ -28,10 +28,10 @@ public class gameWindow implements KeyListener, WindowListener {
 		this.server = server;
 		this.
 		mainWindow = new JFrame("Snake Game");
-		mainWindow.setSize(1900, 900);
+		mainWindow.setSize(1000, 1000);
 
 
-		GridLayout gameBoard = new GridLayout(100, 100, 0, 0);
+		GridLayout gameBoard = new GridLayout(100, 100, 1, 1);
 
 
 		for (int v = 0; v < 100; v++) {

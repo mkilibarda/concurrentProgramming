@@ -23,7 +23,7 @@ public class SnakeAI extends Snake {
 	 */
 	public void run() {
 		// System.out.println(Thread.currentThread().getName() + " thread started");
-		delay();
+		//delay();
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(7);
 		

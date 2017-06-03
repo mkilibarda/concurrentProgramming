@@ -1,7 +1,6 @@
 package snakeGame;
 
 
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,8 +12,8 @@ public class Snake implements Runnable {
 	boolean alive;
 	CellList screen;
 	
-	//snake score
-	 int score=0;
+	// snake score
+	int score = 0;
 	
 	// KEYS MAP
 	protected int direction = -1;
@@ -40,7 +39,7 @@ public class Snake implements Runnable {
 		// set snake head position
 		int[] pos = map.getRandomCellwithBoundariesXY();
 		snakeBody.add(new int[] { pos[1], pos[0] });
-		//System.out.println("HEad at: " + pos[0] + " " + pos[1]);
+		// System.out.println("HEad at: " + pos[0] + " " + pos[1]);
 		if (randomDirection == 0) {
 			snakeBody.add(new int[] { pos[1] + 1, pos[0] });
 			snakeBody.add(new int[] { pos[1] + 2, pos[0] });
@@ -114,106 +113,142 @@ public class Snake implements Runnable {
 	}
 	
 	public void move(int move) {
-		//System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
+		// System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
 		// last node go to second last node spot
-		//System.out.println(move);
+		// System.out.println(move);
+		boolean ateFood = false;
+		int[] head = snakeBody.get(0);
+		int[] tailTip = snakeBody.get(snakeBody.size() - 1);
+		int tipIndex = snakeBody.size();
+		
 		if (move == 1 && direction != DOWN) {
 			// set direction of snake
 			this.direction = UP;
 			// move head to next cell
-			snakeBody.add(0, new int[] { snakeBody.get(0)[0] - 1, snakeBody.get(0)[1] });
+			snakeBody.add(0, new int[] { head[0] - 1, head[1] });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				// set last cell to leaving
-				screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-						.isLeaving();
-				snakeBody.remove(snakeBody.size() - 1);
+				if (!screen.getCell(head[0] - 1, head[1]).hasFood()) {
+					// set last cell to leaving
+					screen.getCell(tailTip).isLeaving();
+					snakeBody.remove(tipIndex);
+				} else {
+					ateFood = true;
+				}
 			} else {
 				snakeBody.remove(0);
 			}
 		} else if (move == 2 && direction != UP) {
 			this.direction = DOWN;
-			snakeBody.add(0, new int[] { snakeBody.get(0)[0] + 1, snakeBody.get(0)[1] });
+			snakeBody.add(0, new int[] { head[0] + 1, head[1] });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-						.isLeaving();
-				snakeBody.remove(snakeBody.size() - 1);
+				if (!screen.getCell(head[0] + 1, head[1]).hasFood()) {
+					screen.getCell(tailTip).isLeaving();
+					snakeBody.remove(tipIndex);
+				} else {
+					ateFood = true;
+				}
 			} else {
 				snakeBody.remove(0);
 			}
 		} else if (move == 3 && direction != RIGHT) {
 			this.direction = LEFT;
 			
-			snakeBody.add(0, new int[] { snakeBody.get(0)[0], snakeBody.get(0)[1] - 1 });
+			snakeBody.add(0, new int[] { head[0], head[1] - 1 });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-						.isLeaving();
-				snakeBody.remove(snakeBody.size() - 1);
+				if (!screen.getCell(head[0], head[1] - 1).hasFood()) {
+					screen.getCell(tailTip).isLeaving();
+					snakeBody.remove(tipIndex);
+				} else {
+					ateFood = true;
+				}
 			} else {
 				snakeBody.remove(0);
 			}
 		} else if (move == 4 && direction != LEFT) {
 			this.direction = RIGHT;
-			snakeBody.add(0, new int[] { snakeBody.get(0)[0], snakeBody.get(0)[1] + 1 });
+			snakeBody.add(0, new int[] { head[0], head[1] + 1 });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-						.isLeaving();
-				snakeBody.remove(snakeBody.size() - 1);
+				if (!screen.getCell(head[0], head[1] + 1).hasFood()) {
+					screen.getCell(tailTip).isLeaving();
+					snakeBody.remove(tipIndex);
+				} else {
+					ateFood = true;
+				}
 			} else {
 				snakeBody.remove(0);
 			}
 		} else {
 			if (next_direction == UP) {
-				snakeBody.add(0, new int[] { snakeBody.get(0)[0] - 1, snakeBody.get(0)[1] });
+				snakeBody.add(0, new int[] { head[0] - 1, head[1] });
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-							.isLeaving();
-					snakeBody.remove(snakeBody.size() - 1);
+					if (!screen.getCell(head[0] - 1, head[1]).hasFood()) {
+						screen.getCell(tailTip).isLeaving();
+						snakeBody.remove(tipIndex);
+					} else {
+						ateFood = true;
+					}
 				} else {
 					snakeBody.remove(0);
 				}
 			} else if (next_direction == DOWN) {
-				snakeBody.add(0, new int[] { snakeBody.get(0)[0] + 1, snakeBody.get(0)[1] });
+				snakeBody.add(0, new int[] { head[0] + 1, head[1] });
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-							.isLeaving();
-					snakeBody.remove(snakeBody.size() - 1);
+					if (!screen.getCell(head[0] + 1, head[1]).hasFood()) {
+						screen.getCell(tailTip).isLeaving();
+						snakeBody.remove(tipIndex);
+					} else {
+						ateFood = true;
+					}
 				} else {
 					snakeBody.remove(0);
 				}
 			} else if (next_direction == LEFT) {
-				snakeBody.add(0, new int[] { snakeBody.get(0)[0], snakeBody.get(0)[1] - 1 });
+				snakeBody.add(0, new int[] { head[0], head[1] - 1 });
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-							.isLeaving();
-					snakeBody.remove(snakeBody.size() - 1);
+					if (!screen.getCell(head[0], head[1] - 1).hasFood()) {
+						screen.getCell(tailTip).isLeaving();
+						snakeBody.remove(tipIndex);
+					} else {
+						ateFood = true;
+					}
 				} else {
 					snakeBody.remove(0);
 				}
 			} else if (next_direction == RIGHT) {
-				snakeBody.add(0, new int[] { snakeBody.get(0)[0], snakeBody.get(0)[1] + 1 });
+				snakeBody.add(0, new int[] { head[0], head[1] + 1 });
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					screen.getCell(snakeBody.get(snakeBody.size() - 1)[0], snakeBody.get(snakeBody.size() - 1)[1])
-							.isLeaving();
-					snakeBody.remove(snakeBody.size() - 1);
+					if (!screen.getCell(head[0], head[1] + 1).hasFood()) {
+						screen.getCell(tailTip).isLeaving();
+						snakeBody.remove(tipIndex);
+					} else {
+						ateFood = true;
+					}
 				} else {
 					snakeBody.remove(0);
 				}
+			}
+		}
+		while (ateFood){
+			Cell cell = screen.getRandomCellwithBoundaries();
+			if (cell.isEmpty() && !(cell.hasFood())) {
+				cell.placeFood();
+				ateFood = false;
 			}
 		}
 		if (alive == false) {
@@ -230,23 +265,25 @@ public class Snake implements Runnable {
 	
 	@Override
 	public void run() {
-		//System.out.println(Thread.currentThread().getName() + " thread started");
+		// System.out.println(Thread.currentThread().getName() + " thread started");
 	}
-	public int getScore(){
+	
+	public int getScore() {
 		return score;
 	}
+	
 	@Override
 	public String toString() {
-		if(this.snake_num==1){
+		if (this.snake_num == 1) {
 			return "yellow Win";
 		}
-		if(this.snake_num==2){
+		if (this.snake_num == 2) {
 			return "blue Win";
 		}
-		if(this.snake_num==3){
+		if (this.snake_num == 3) {
 			return "red Win";
 		}
-		if(this.snake_num==4){
+		if (this.snake_num == 4) {
 			return "green Win";
 		}
 		return "Snake AI win";

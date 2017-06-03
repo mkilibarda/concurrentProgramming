@@ -11,6 +11,7 @@ public class Cell {
 	
 	private BlockingQueue taskQueue = null;
 	private boolean isEmpty = true;
+	private boolean hasFood = false;
 	private int x;
 	private int y;
 	
@@ -42,10 +43,6 @@ public class Cell {
 		return x;
 	}
 	
-	public boolean isEmpty() {
-		return isEmpty;
-	}
-	
 	/*
 	 * Set the location of the y coordinates returns y
 	 */
@@ -53,11 +50,25 @@ public class Cell {
 		return y;
 	}
 	
+	public boolean isEmpty() {
+		return isEmpty;
+	}
+	
+	public boolean hasFood(){
+		return hasFood;
+	}
+	
+	public synchronized void placeFood(){
+		hasFood = true;
+		cellPanel.setBackground(Color.magenta);
+	}
+	
 	/*
 	 * breaks the thread out of queue to block
 	 */
 	public synchronized void beingUsed() {
 		isEmpty = false;
+		hasFood = false;
 		cellPanel.setBackground(Color.darkGray);
 	}
 	

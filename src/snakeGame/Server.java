@@ -54,6 +54,9 @@ public class Server {
 	
 	public void startGame(int AIPlayers) {
 		createSnakeAI(AIPlayers);
+		
+		gameScreen.fillInitialFood(players.size()+comp.size());
+		
 		scoreScreen.showScoreWindow();
 		gameW.showGameWindow();
 		
@@ -89,7 +92,7 @@ public class Server {
 					
 				}
 			}
-		}, 0, 250);
+		}, 0, 200);
 	}
 	
 	public void addSnakePlayer(int playerNumber) {
@@ -131,21 +134,26 @@ public class Server {
 		for (int i = 0; i < comp.size(); i++) {
 			if (comp.get(i).alive) {
 				aliveSnake++;
-				alivePlayers++;
+				aliveAI++;
 			}
 		}
 		for (int j = 0; j < this.players.size(); j++) {
 			if (players.get(j).alive) {
 				aliveSnake++;
-				aliveAI++;
+				alivePlayers++;
 			}
 		}
+		// System.out.println("total Snakes: " + aliveSnake);
+		// System.out.println("Player Snakes: " + alivePlayers);
+		// System.out.println("AI Snakes: " + aliveAI);
+		// System.out.println();
+		// System.out.println();
 		// more than 1 snake return null
-		if (aliveSnake > 1) {
+		if (alivePlayers > 1) {
 			return null;
 		}
 		// 1 snake return that snake
-		if (aliveSnake == 1) {
+		if (alivePlayers == 0 || aliveSnake == 1) {
 			for (int j = 0; j < this.players.size() - 1; j++) {
 				if (players.get(j).alive) {
 					return players.get(j);

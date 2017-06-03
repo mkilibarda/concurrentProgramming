@@ -22,7 +22,7 @@ public class Cell{
        this.y = y;
        cellPanel = new JPanel();
        // cellPanel.setBorder(new LineBorder(Color.orange, 1));   // Set cell's border
-        cellPanel.setBackground(Color.gray);
+       cellPanel.setBackground(Color.gray);
     }
     
     public JPanel getCellPanel() {

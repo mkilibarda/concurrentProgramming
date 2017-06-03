@@ -57,11 +57,13 @@ public class scoreWndow  {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// The Frame cannot be resized
 		frame.setResizable(false);
+	}
+
+	public void showScoreWindow() {
 		// Tells the frame that it is visible
 		frame.setVisible(true);
 	}
-
-
+	
 	public void centerFrameSettings() {
 		// CENTER //
 		panelCenter = new JPanel(new GridLayout(4, 0));

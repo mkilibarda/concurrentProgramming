@@ -13,7 +13,7 @@ public class Server {
 	
 	// the amount of real players
 	int realPlayers = 4;
-//	private Thread[] currentRealPlayers = new Thread[4];
+	// private Thread[] currentRealPlayers = new Thread[4];
 	// The amount of AI Players
 	int AIPlayers;
 	List<SnakeAI> comp = new ArrayList<SnakeAI>();
@@ -22,7 +22,7 @@ public class Server {
 	
 	// ThreadPool for the AI snakes
 	ThreadPool aiPool;
-	ThreadPool workerPool = new ThreadPool(4,4);
+	ThreadPool workerPool = new ThreadPool(4, 4);
 	
 	// movement schemes
 	// in order of UP / DOWN / LEFT / RIGHT.
@@ -35,6 +35,7 @@ public class Server {
 	
 	gameWindow gameW;
 	logInWindow logInW;
+	scoreWndow scoreScreen;
 	
 	/*
 	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the number of AI needed.
@@ -43,6 +44,7 @@ public class Server {
 		
 		// Create gameWindow
 		gameW = new gameWindow(this);
+		scoreScreen = new scoreWndow(this);
 		logInW = new logInWindow(this);
 		
 		// create all players
@@ -51,20 +53,16 @@ public class Server {
 	
 	public void startGame(int AIPlayers) {
 		createSnakeAI(AIPlayers);
+		scoreScreen.showScoreWindow();
 		gameW.showGameWindow();
 		
-		scoreWndow scoreScreen =new scoreWndow(this);
 		
-		for(int i = 0; i < 100; i++){
-			for(int j = 0; j < 100; j++){
-				if(i == 0 || j == 0 || i == 99 || j == 99)
-				gameScreen.getCell(i, j).beingUsed();;
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				if (i == 0 || j == 0 || i == 99 || j == 99) gameScreen.getCell(i, j).beingUsed();;
 				
 			}
 		}
-		
-		
-		
 		
 		// Every second allow the AI to make a decision on the direction to move
 		Timer t = new Timer();
@@ -84,17 +82,17 @@ public class Server {
 				scoreScreen.returnScore();
 				gameW.displayCellList();
 			}
-		}, 0, 1000);
+		}, 0, 250);
 	}
 	
 	public void addSnakePlayer(int playerNumber) {
 		Buffer playerBuf = new Buffer(1);
 		playerBuffer.add(playerBuf);
-		Snake player = new SnakePlayer(gameW, playerNumber,gameScreen, keyschemas[playerNumber-1],playerBuf);
+		Snake player = new SnakePlayer(gameW, playerNumber, gameScreen, keyschemas[playerNumber - 1], playerBuf);
 		players.add(player);
 		Thread snakePlayer = new Thread(player);
 		workers.add(new Worker(playerBuf, player));
-//		currentRealPlayers[playerNumber-1] = snakePlayer;
+		// currentRealPlayers[playerNumber-1] = snakePlayer;
 		snakePlayer.start();
 	}
 	
@@ -108,9 +106,8 @@ public class Server {
 		aiPool = new ThreadPool(10, AIPlayers);
 		// thread numbers start at 5 to accommodate for the (currently) 4 real-players
 		for (int i = realPlayers; i < AIPlayers + realPlayers; i++) {
-			comp.add(new SnakeAI(gameW, i + 1,gameScreen));
+			comp.add(new SnakeAI(gameW, i + 1, gameScreen));
 		}
-		
 		
 	}
 	

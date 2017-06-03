@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
-public class scoreWndow  {
+public class ScoreWindow  {
 
 	private JFrame frame;
 	private JPanel panelCenter;
@@ -44,7 +44,7 @@ public class scoreWndow  {
 	// private int[][] keyschemas;
 	private Server server;
 
-	public scoreWndow(Server server) {
+	public ScoreWindow(Server server) {
 		// this.keyschemas = server;
 		this.server = server;
 		frame = new JFrame("Score	 Window");

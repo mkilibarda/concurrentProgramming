@@ -36,7 +36,7 @@ public class Server {
 	
 	gameWindow gameW;
 	logInWindow logInW;
-	scoreWndow scoreScreen;
+	ScoreWindow scoreScreen;
 	
 	/*
 	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the number of AI needed.
@@ -45,7 +45,7 @@ public class Server {
 		
 		// Create gameWindow
 		gameW = new gameWindow(this);
-		scoreScreen = new scoreWndow(this);
+		scoreScreen = new ScoreWindow(this);
 		logInW = new logInWindow(this);
 		
 		// create all players

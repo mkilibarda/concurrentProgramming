@@ -29,6 +29,13 @@ public class CellList {
 		return null;
 	}
 	
+	public int[] getRandomCellwithBoundariesXY() {
+		Cell cell = getRandomCellwithBoundaries();
+		int[] res = new int[] { cell.getX(), cell.getY() };
+		return res;
+	}
+	
+	
 	public Cell getRandomCellwithBoundaries(){
 		int minHeight = (int) (height*0.05);
 		int maxHeight = (int) (height*0.95);

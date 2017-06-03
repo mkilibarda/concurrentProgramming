@@ -40,7 +40,7 @@ public class Snake implements Runnable {
 		// set snake head position
 		int[] pos = map.getRandomCellwithBoundariesXY();
 		snakeBody.add(new int[] { pos[1], pos[0] });
-		System.out.println("HEad at: " + pos[0] + " " + pos[1]);
+		//System.out.println("HEad at: " + pos[0] + " " + pos[1]);
 		if (randomDirection == 0) {
 			snakeBody.add(new int[] { pos[1] + 1, pos[0] });
 			snakeBody.add(new int[] { pos[1] + 2, pos[0] });
@@ -114,9 +114,9 @@ public class Snake implements Runnable {
 	}
 	
 	public void move(int move) {
-		System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
+		//System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
 		// last node go to second last node spot
-		System.out.println(move);
+		//System.out.println(move);
 		if (move == 1 && direction != DOWN) {
 			// set direction of snake
 			this.direction = UP;
@@ -223,14 +223,14 @@ public class Snake implements Runnable {
 		}
 		// testing puropose
 		// for(int i = 0; i < snakeBody.size();i++){
-		// System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
+		// //System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
 		// }
 		
 	}
 	
 	@Override
 	public void run() {
-		System.out.println(Thread.currentThread().getName() + " thread started");
+		//System.out.println(Thread.currentThread().getName() + " thread started");
 	}
 	public int getScore(){
 		return score;

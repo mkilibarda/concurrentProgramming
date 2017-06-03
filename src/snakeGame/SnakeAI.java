@@ -22,7 +22,7 @@ public class SnakeAI extends Snake {
 	 * @see snakeGame.Snake#run()
 	 */
 	public void run() {
-		// System.out.println(Thread.currentThread().getName() + " thread started");
+		// //System.out.println(Thread.currentThread().getName() + " thread started");
 		//delay();
 		if(alive == true){
 			Random randomGenerator = new Random();
@@ -34,19 +34,19 @@ public class SnakeAI extends Snake {
 					// Check if the next move to UP is hitting edge of gameBoard
 					if(snakeBody.get(0)[0] - 1 == 0){
 						// Check if right is not free
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[1] + 1 == 99){
 							// If its not, then move left
 							next_direction = LEFT;
 							randomInt = 3;
-							System.out.println("found wall");
+							//System.out.println("found wall");
 						}
 						// Else move right 
 						next_direction = RIGHT;
 						randomInt = 4;
 					}else{
 						next_direction = UP;
-						System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+						//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 					}
 				}
 
@@ -54,9 +54,9 @@ public class SnakeAI extends Snake {
 			} else if (randomInt == 2) {
 				if (direction != UP) {
 					if(snakeBody.get(0)[0] + 1 == 99){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[1] - 1 == 0){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = LEFT;
 							randomInt = 3;
 						}
@@ -64,7 +64,7 @@ public class SnakeAI extends Snake {
 						randomInt = 4;
 					}else{
 						next_direction = DOWN;
-						System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+						//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 					}
 				}
 
@@ -72,9 +72,9 @@ public class SnakeAI extends Snake {
 			} else if (randomInt == 3) {
 				if (direction != RIGHT) {
 					if(snakeBody.get(0)[1] - 1 == 0){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[0] + 1 == 99){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = UP;
 							randomInt = 1;
 						}
@@ -82,7 +82,7 @@ public class SnakeAI extends Snake {
 						randomInt = 2;
 					}else{
 						next_direction = LEFT;
-						System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+						//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 					}
 				}
 
@@ -91,10 +91,10 @@ public class SnakeAI extends Snake {
 				if (direction != LEFT) {
 					// Check if the next move to the right is the wall
 					if(snakeBody.get(0)[1] + 1 == 99){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						// If above is border, go down
 						if(snakeBody.get(0)[0] - 1 == 0){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = DOWN;
 							randomInt = 2;
 						}
@@ -103,7 +103,7 @@ public class SnakeAI extends Snake {
 						randomInt = 1;
 					}else{
 						next_direction = RIGHT;
-						System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+						//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 					}
 				}
 
@@ -112,12 +112,12 @@ public class SnakeAI extends Snake {
 					// Check if the next move to UP is hitting edge of gameBoard
 					if(snakeBody.get(0)[0] - 1 == 0){
 						// Check if right is not free
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[1] + 1 == 99){
 							// If its not, then move left
 							next_direction = LEFT;
 							randomInt = 3;
-							System.out.println("found wall");
+							//System.out.println("found wall");
 						}
 						// Else move right 
 						next_direction = RIGHT;
@@ -126,9 +126,9 @@ public class SnakeAI extends Snake {
 
 				}else if(direction == DOWN){
 					if(snakeBody.get(0)[0] + 1 == 99){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[1] - 1 == 0){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = LEFT;
 							randomInt = 3;
 						}
@@ -137,9 +137,9 @@ public class SnakeAI extends Snake {
 					}
 				}else if(direction == LEFT){
 					if(snakeBody.get(0)[1] - 1 == 0){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						if(snakeBody.get(0)[0] + 1 == 99){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = UP;
 							randomInt = 1;
 						}
@@ -149,10 +149,10 @@ public class SnakeAI extends Snake {
 				}else{
 					// Check if the next move to the right is the wall
 					if(snakeBody.get(0)[1] + 1 == 99){
-						System.out.println("found wall");
+						//System.out.println("found wall");
 						// If above is border, go down
 						if(snakeBody.get(0)[0] - 1 == 0){
-							System.out.println("found wall");
+							//System.out.println("found wall");
 							next_direction = DOWN;
 							randomInt = 2;
 						}
@@ -176,11 +176,11 @@ public class SnakeAI extends Snake {
 		try {
 			// thread to sleep for random milliseconds
 			actualDelay = randomWithRange(100, 300);
-			// System.out.println("Actual delay is "+actualDelay);
+			// //System.out.println("Actual delay is "+actualDelay);
 			Thread.sleep(actualDelay);
 		}
 		catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 

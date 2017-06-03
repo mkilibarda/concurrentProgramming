@@ -29,7 +29,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 	 */
 	public void run() {
 		if(alive == true){
-			System.out.println(Thread.currentThread().getName() + " thread started");
+			//System.out.println(Thread.currentThread().getName() + " thread started");
 			gameW.getMainFrame().addKeyListener(this);
 		}
 	}
@@ -50,7 +50,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 				if (direction != DOWN) {
 					buffer.append(1);
 					next_direction = UP;
-					System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+					//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 				}
 
 				//if key press is Down and current direction is not up then move down
@@ -58,7 +58,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 				if (direction != UP) {
 					buffer.append(2);
 					next_direction = DOWN;
-					System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+					//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 				}
 
 				//If key press is left and snake not facing right then move left
@@ -66,7 +66,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 				if (direction != RIGHT) {
 					buffer.append(3);
 					next_direction = LEFT;
-					System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+					//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 				}
 
 				//If key press is right and snake not facing left then move right
@@ -74,7 +74,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 				if (direction != LEFT) {
 					buffer.append(4);
 					next_direction = RIGHT;
-					System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
+					//System.out.printf("Thread: snake_" + this.snake_num + " === " + next_direction + "\n");
 				}
 
 			}

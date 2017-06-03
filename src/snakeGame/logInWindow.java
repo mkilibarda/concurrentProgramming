@@ -168,7 +168,7 @@ public class logInWindow implements KeyListener {
 					JOptionPane.showMessageDialog(panelBot, "There have to be more than 0 AI Players.");
 					panelBotTextField.setText("");
 				}else{
-					System.out.println("AI Players: " + AIPlayers);
+					//System.out.println("AI Players: " + AIPlayers);
 					
 					server.startGame(AIPlayers);
 					frame.dispose();
@@ -205,7 +205,7 @@ public class logInWindow implements KeyListener {
 		
 		switch (c) {
 			case KeyEvent.VK_UP:
-				System.out.println("UP Event");
+				//System.out.println("UP Event");
 				server.addSnakePlayer(1);
 				// playerOne = 1;
 				
@@ -220,7 +220,7 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_W:
-				System.out.println("W EVENT");
+				//System.out.println("W EVENT");
 				server.addSnakePlayer(2);
 
 				// playerTwo = 1;
@@ -235,7 +235,7 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_Y:
-				System.out.println("Y EVENT");
+				//System.out.println("Y EVENT");
 				server.addSnakePlayer(3);
 
 				// playerThree = 1;
@@ -250,7 +250,7 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_P:
-				System.out.println("P EVENT");
+				//System.out.println("P EVENT");
 				server.addSnakePlayer(4);
 
 				// playerFour = 1;

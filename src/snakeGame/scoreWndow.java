@@ -48,7 +48,7 @@ public class scoreWndow  {
 		this.server = server;
 		frame = new JFrame("Score	 Window");
 		// frame.setName("Log In Window");
-		frame.setBounds(450, 150, 350, 150);
+		frame.setBounds(1050, 150, 350, 150);
 		//frame.setLayout(new GridLayout(3, 0));
 
 		centerFrameSettings();

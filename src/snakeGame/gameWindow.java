@@ -17,70 +17,66 @@ import javax.swing.JButton;
 
 
 public class gameWindow implements KeyListener, WindowListener {
-
+	
 	// private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 	private JFrame mainWindow;
-
+	
 	private Server server;
-
-
+	
 	public gameWindow(Server server) {
 		this.server = server;
-		this.
-		mainWindow = new JFrame("Snake Game");
-		mainWindow.setSize(1000, 1000);
-
-
+		this.mainWindow = new JFrame("Snake Game");
+		mainWindow.setBounds(0, 0, 1000, 1000);
+		
 		GridLayout gameBoard = new GridLayout(100, 100, 1, 1);
-
-
+		
 		for (int v = 0; v < 100; v++) {
-			for (int h = 0; h < 100; h++){
+			for (int h = 0; h < 100; h++) {
 				mainWindow.add(server.gameScreen.getCell(v, h).getCellPanel());
 			}
 		}
-
+		
 		mainWindow.setLayout(gameBoard);
-
 		
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-	public void displayCellList(){
+	
+	public void displayCellList() {
 		mainWindow.revalidate();
 		mainWindow.repaint();
-		//mainWindow.setVisible(false);
-		//mainWindow.setVisible(true);
-
+		// mainWindow.setVisible(false);
+		// mainWindow.setVisible(true);
+		
 	}
-
+	
 	public void showGameWindow() {
 		mainWindow.setVisible(true);
 	}
-
+	
 	@Override
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
-
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
-		case KeyEvent.VK_ESCAPE:
-			System.exit(0);
-			break;
+			case KeyEvent.VK_ESCAPE:
+				System.exit(0);
+				break;
 		}
 		//
 		// int c = e.getKeyCode();
@@ -159,45 +155,45 @@ public class gameWindow implements KeyListener, WindowListener {
 		// }
 		//
 	}
-
+	
 	public JFrame getMainFrame() {
 		return mainWindow;
 	}
-
+	
 	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void windowDeiconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 }

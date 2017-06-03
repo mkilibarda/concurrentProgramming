@@ -91,14 +91,6 @@ public class Snake implements Runnable {
 		return snakeBody.size();
 	}
 	
-	public void grow() {
-		// create 1more array behind same direction as last one
-		// snakeBody.add(new int[] { snakeBody.get(getLength() - 1)[0], snakeBody.get(getLength() - 1)[1] });
-		// ArrayList<Integer > tem=new ArrayList< Integer>();
-		// tem.add(allLocation.get(allLocation.size()-1).get(0));
-		// tem.add(allLocation.get(allLocation.size()-1).get(1));
-	}
-	
 	public void checkOOB() {
 		if (snakeBody.get(0)[0] == 0 || snakeBody.get(0)[0] == 100 || snakeBody.get(0)[1] == 0
 				|| snakeBody.get(0)[1] == 100) {
@@ -248,6 +240,7 @@ public class Snake implements Runnable {
 			Cell cell = screen.getRandomCellwithBoundaries();
 			if (cell.isEmpty() && !(cell.hasFood())) {
 				cell.placeFood();
+				this.score += 50;
 				ateFood = false;
 			}
 		}

@@ -34,9 +34,7 @@ public class CellList {
 	}
 	
 	public void fillInitialFood(int playerNum) {
-		int foodNum = (int) Math.ceil((double) playerNum / 10.0);
-		System.out.println("FOOD NUMBER: " + foodNum);
-		
+		int foodNum = (int) Math.ceil((double) playerNum / 10.0);		
 		for (int i = 0; i < foodNum; i++) {
 			Cell cell = getRandomCellwithBoundaries();
 			if (cell.isEmpty() && !(cell.hasFood())) {

@@ -1,6 +1,7 @@
 package snakeGame;
 
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -233,5 +234,21 @@ public class Snake implements Runnable {
 	}
 	public int getScore(){
 		return score;
+	}
+	@Override
+	public String toString() {
+		if(this.snake_num==1){
+			return "yellow Win";
+		}
+		if(this.snake_num==2){
+			return "blue Win";
+		}
+		if(this.snake_num==3){
+			return "red Win";
+		}
+		if(this.snake_num==4){
+			return "green Win";
+		}
+		return "Snake AI win";
 	}
 }

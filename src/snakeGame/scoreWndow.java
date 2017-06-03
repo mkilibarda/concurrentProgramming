@@ -2,6 +2,7 @@ package snakeGame;
 
 
 
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -30,10 +31,10 @@ public class scoreWndow  {
 	private JPanel panelMid3 = new JPanel(new GridLayout(0, 4));
 	private JPanel panelMid4 = new JPanel(new GridLayout(0, 4));
 
-	private JLabel P12Label = new JLabel("Player One: ");
-	private JLabel P21Label = new JLabel("Player Two: ");
-	private JLabel P31Label = new JLabel("Player Three: ");
-	private JLabel P41Label = new JLabel("Player Four: ");
+	private JLabel P12Label = new JLabel("Player Yellow: ");
+	private JLabel P21Label = new JLabel("Player Blue: ");
+	private JLabel P31Label = new JLabel("Player Green: ");
+	private JLabel P41Label = new JLabel("Player Red: ");
 
 	JLabel score1 = new JLabel("Player OUT");
 	JLabel score2 = new JLabel("Player OUT");

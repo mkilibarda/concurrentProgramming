@@ -143,11 +143,11 @@ public class Server {
 				alivePlayers++;
 			}
 		}
-		// System.out.println("total Snakes: " + aliveSnake);
-		// System.out.println("Player Snakes: " + alivePlayers);
-		// System.out.println("AI Snakes: " + aliveAI);
-		// System.out.println();
-		// System.out.println();
+		 System.out.println("total Snakes: " + aliveSnake);
+		 System.out.println("Player Snakes: " + alivePlayers);
+		 System.out.println("AI Snakes: " + aliveAI);
+		 System.out.println();
+		 System.out.println();
 		// more than 1 snake return null
 		if (alivePlayers > 1) {
 			return null;
@@ -155,12 +155,12 @@ public class Server {
 		// 1 snake return that snake
 		if (alivePlayers == 0 || aliveSnake == 1) {
 			for (int j = 0; j < this.players.size() - 1; j++) {
-				if (players.get(j).alive) {
+				if (players.get(j-1).alive) {
 					return players.get(j);
 				}
 			}
 			for (int i = 0; i < comp.size(); i++) {
-				if (comp.get(i).alive) {
+				if (comp.get(i-1).alive) {
 					return comp.get(i);
 				}
 			}

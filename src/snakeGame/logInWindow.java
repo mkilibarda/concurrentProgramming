@@ -24,7 +24,7 @@ public class logInWindow implements KeyListener {
 	private JPanel panelCenter;
 	private JPanel panelBot;
 	
-//	private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
+	// private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 	private int AIPlayers;
 	
 	private JPanel panelMid1 = new JPanel(new GridLayout(0, 4));
@@ -158,21 +158,23 @@ public class logInWindow implements KeyListener {
 			
 			@Override // Close current window, make new instance of new one and open it
 			public void actionPerformed(ActionEvent e) {
-				
-				AIPlayers = Integer.parseInt(panelBotTextField.getText().toString());
-				
-				if(AIPlayers > 100){
-					JOptionPane.showMessageDialog(panelBot, "There can only be 100 AI Players.");
-					panelBotTextField.setText("");
-				}else if(AIPlayers <= 0){
-					JOptionPane.showMessageDialog(panelBot, "There have to be more than 0 AI Players.");
-					panelBotTextField.setText("");
-				}else{
-					//System.out.println("AI Players: " + AIPlayers);
+				if (panelBotTextField.getText().toString().length() > 0 && isNumeric(panelBotTextField) && server.players.size() > 0) {
 					
-					server.startGame(AIPlayers);
-					frame.dispose();
+					AIPlayers = Integer.parseInt(panelBotTextField.getText().toString());
 					
+					if (AIPlayers > 100) {
+						JOptionPane.showMessageDialog(panelBot, "There can only be 100 AI Players.");
+						panelBotTextField.setText("");
+					} else if (AIPlayers <= 0) {
+						JOptionPane.showMessageDialog(panelBot, "There have to be more than 0 AI Players.");
+						panelBotTextField.setText("");
+					} else {
+						// System.out.println("AI Players: " + AIPlayers);
+						
+						server.startGame(AIPlayers);
+						frame.dispose();
+						
+					}
 				}
 			}
 		});
@@ -185,6 +187,16 @@ public class logInWindow implements KeyListener {
 		panelBot.add(panelBot2);
 		panelBot.add(panelBot3);
 		frame.add(panelBot, BorderLayout.SOUTH);
+	}
+	
+	public static boolean isNumeric(JTextField panelBotTextField) {
+		try {
+			int i = Integer.parseInt(panelBotTextField.getText().toString());
+		}
+		catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
@@ -205,7 +217,7 @@ public class logInWindow implements KeyListener {
 		
 		switch (c) {
 			case KeyEvent.VK_UP:
-				//System.out.println("UP Event");
+				// System.out.println("UP Event");
 				server.addSnakePlayer(1);
 				// playerOne = 1;
 				
@@ -220,9 +232,9 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_W:
-				//System.out.println("W EVENT");
+				// System.out.println("W EVENT");
 				server.addSnakePlayer(2);
-
+				
 				// playerTwo = 1;
 				
 				panelMid2.removeAll();
@@ -235,9 +247,9 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_Y:
-				//System.out.println("Y EVENT");
+				// System.out.println("Y EVENT");
 				server.addSnakePlayer(3);
-
+				
 				// playerThree = 1;
 				
 				panelMid3.removeAll();
@@ -250,9 +262,9 @@ public class logInWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_P:
-				//System.out.println("P EVENT");
+				// System.out.println("P EVENT");
 				server.addSnakePlayer(4);
-
+				
 				// playerFour = 1;
 				
 				panelMid4.removeAll();
@@ -276,37 +288,37 @@ public class logInWindow implements KeyListener {
 		
 	}
 	
-//	public int getPlayerOne() {
-//		return playerOne;
-//	}
-//	
-//	public void setPlayerOne(int playerOne) {
-//		this.playerOne = playerOne;
-//	}
-//	
-//	public int getPlayerTwo() {
-//		return playerTwo;
-//	}
-//	
-//	public void setPlayerTwo(int playerTwo) {
-//		this.playerTwo = playerTwo;
-//	}
-//	
-//	public int getPlayerThree() {
-//		return playerThree;
-//	}
-//	
-//	public void setPlayerThree(int playerThree) {
-//		this.playerThree = playerThree;
-//	}
-//	
-//	public int getPlayerFour() {
-//		return playerFour;
-//	}
-//	
-//	public void setPlayerFour(int playerFour) {
-//		this.playerFour = playerFour;
-//	}
+	// public int getPlayerOne() {
+	// return playerOne;
+	// }
+	//
+	// public void setPlayerOne(int playerOne) {
+	// this.playerOne = playerOne;
+	// }
+	//
+	// public int getPlayerTwo() {
+	// return playerTwo;
+	// }
+	//
+	// public void setPlayerTwo(int playerTwo) {
+	// this.playerTwo = playerTwo;
+	// }
+	//
+	// public int getPlayerThree() {
+	// return playerThree;
+	// }
+	//
+	// public void setPlayerThree(int playerThree) {
+	// this.playerThree = playerThree;
+	// }
+	//
+	// public int getPlayerFour() {
+	// return playerFour;
+	// }
+	//
+	// public void setPlayerFour(int playerFour) {
+	// this.playerFour = playerFour;
+	// }
 	
 	public int getAIPlayers() {
 		return AIPlayers;

@@ -11,6 +11,10 @@ public class Snake implements Runnable {
 	int snake_num;
 	boolean alive;
 	CellList screen;
+	
+	//snake score
+	 int score=0;
+	
 	// KEYS MAP
 	protected int direction = -1;
 	protected int next_direction = -1;
@@ -227,5 +231,7 @@ public class Snake implements Runnable {
 	public void run() {
 		System.out.println(Thread.currentThread().getName() + " thread started");
 	}
-	
+	public int getScore(){
+		return score;
+	}
 }

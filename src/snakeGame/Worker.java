@@ -13,4 +13,10 @@ public class Worker implements Runnable {
 			player.move(v);
 		}
 	} 
+
+	public Snake getplayer() {
+		return player;
+	}
+
+	
 }

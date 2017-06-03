@@ -13,6 +13,7 @@ public class Server {
 	
 	// the amount of real players
 	int realPlayers = 4;
+	int[] playerRegister = new int[] { 0, 0, 0, 0 };
 	// private Thread[] currentRealPlayers = new Thread[4];
 	// The amount of AI Players
 	int AIPlayers;
@@ -56,7 +57,6 @@ public class Server {
 		scoreScreen.showScoreWindow();
 		gameW.showGameWindow();
 		
-		
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
 				if (i == 0 || j == 0 || i == 99 || j == 99) gameScreen.getCell(i, j).beingUsed();;
@@ -86,14 +86,17 @@ public class Server {
 	}
 	
 	public void addSnakePlayer(int playerNumber) {
-		Buffer playerBuf = new Buffer(1);
-		playerBuffer.add(playerBuf);
-		Snake player = new SnakePlayer(gameW, playerNumber, gameScreen, keyschemas[playerNumber - 1], playerBuf);
-		players.add(player);
-		Thread snakePlayer = new Thread(player);
-		workers.add(new Worker(playerBuf, player));
-		// currentRealPlayers[playerNumber-1] = snakePlayer;
-		snakePlayer.start();
+		if (playerRegister[playerNumber-1] == 0) {
+			Buffer playerBuf = new Buffer(1);
+			playerBuffer.add(playerBuf);
+			Snake player = new SnakePlayer(gameW, playerNumber, gameScreen, keyschemas[playerNumber - 1], playerBuf);
+			players.add(player);
+			Thread snakePlayer = new Thread(player);
+			workers.add(new Worker(playerBuf, player));
+			// currentRealPlayers[playerNumber-1] = snakePlayer;
+			snakePlayer.start();
+			playerRegister[playerNumber-1] = 1;
+		}
 	}
 	
 	/*

@@ -17,6 +17,7 @@ public class Server {
 	// The amount of AI Players
 	int AIPlayers;
 	List<SnakeAI> comp = new ArrayList<SnakeAI>();
+	List<Snake> players = new ArrayList<Snake>();
 	List<Worker> workers = new ArrayList<Worker>();
 	
 	// ThreadPool for the AI snakes
@@ -90,6 +91,7 @@ public class Server {
 		Buffer playerBuf = new Buffer(1);
 		playerBuffer.add(playerBuf);
 		Snake player = new SnakePlayer(gameW, playerNumber,gameScreen, keyschemas[playerNumber-1],playerBuf);
+		players.add(player);
 		Thread snakePlayer = new Thread(player);
 		workers.add(new Worker(playerBuf, player));
 //		currentRealPlayers[playerNumber-1] = snakePlayer;

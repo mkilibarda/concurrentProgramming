@@ -96,16 +96,16 @@ public class scoreWndow  {
 	}
 	public void returnScore(){	
 		try{
-			score1.setText(""+server.workers.get(0).getplayer().getScore());}
+			score1.setText(""+server.players.get(0).getScore());}
 		catch(Exception s){}
 		try{
-			score2.setText(""+server.workers.get(1).getplayer().getScore());}
+			score2.setText(""+server.players.get(1).getScore());}
 		catch(Exception s){}	
 		try{
-			score3.setText(""+server.workers.get(2).getplayer().getScore());}
+			score3.setText(""+server.players.get(2).getScore());}
 		catch(Exception s){}		
 		try{
-			score4.setText(""+server.workers.get(3).getplayer().getScore());}
+			score4.setText(""+server.players.get(3).getScore());}
 		catch(Exception s){}		
 	}
 

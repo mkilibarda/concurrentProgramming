@@ -120,141 +120,41 @@ public class Snake implements Runnable {
 		// last node go to second last node spot
 		boolean ateFood = false;
 		int[] head = snakeBody.get(0);
+		int[] newHead = new int[2];
 		int[] tailTip = snakeBody.get(snakeBody.size() - 1);
 		int tipIndex = snakeBody.size();
 		
-		// Snake is CHANGING DIRECTION to UP
-		if (move == 1 && direction != DOWN) {
-			// set direction of snake
+		if ((move == 1 && direction != DOWN) || next_direction == UP) {
 			this.direction = UP;
-			// move head to next cell
-			snakeBody.add(0, new int[] { head[0] - 1, head[1] });
-			checkOOB();
-			checkCollision();
-			if (alive == true) {
-				if (!gameBoard.getCell(head[0] - 1, head[1]).hasFood()) {
-					// set last cell to leaving
-					gameBoard.getCell(tailTip).isLeaving();
-					snakeBody.remove(tipIndex);
-				} else {
-					ateFood = true;
-				}
-			} else {
-				snakeBody.remove(0);
-			}
-		}
-		// Snake is CHANGING DIRECTION to DOWN
-		else if (move == 2 && direction != UP) {
+			newHead = new int[] { head[0] - 1, head[1] };
+		} else if ((move == 2 && direction != UP) || next_direction == DOWN) {
 			this.direction = DOWN;
-			snakeBody.add(0, new int[] { head[0] + 1, head[1] });
-			checkOOB();
-			checkCollision();
-			if (alive == true) {
-				if (!gameBoard.getCell(head[0] + 1, head[1]).hasFood()) {
-					gameBoard.getCell(tailTip).isLeaving();
-					snakeBody.remove(tipIndex);
-				} else {
-					ateFood = true;
-				}
-			} else {
-				snakeBody.remove(0);
-			}
-		}
-		// Snake is CHANGING DIRECTION to LEFT
-		else if (move == 3 && direction != RIGHT) {
+			newHead = new int[] { head[0] + 1, head[1] };
+		} else if ((move == 3 && direction != RIGHT) || next_direction == LEFT) {
 			this.direction = LEFT;
-			snakeBody.add(0, new int[] { head[0], head[1] - 1 });
-			checkOOB();
-			checkCollision();
-			if (alive == true) {
-				if (!gameBoard.getCell(head[0], head[1] - 1).hasFood()) {
-					gameBoard.getCell(tailTip).isLeaving();
-					snakeBody.remove(tipIndex);
-				} else {
-					ateFood = true;
-				}
-			} else {
-				snakeBody.remove(0);
-			}
-		}
-		// Snake is CHANGING DIRECTION to RIGHT
-		else if (move == 4 && direction != LEFT) {
+			newHead = new int[] { head[0], head[1] - 1 };
+		} else if ((move == 4 && direction != LEFT) || next_direction == RIGHT) {
 			this.direction = RIGHT;
-			snakeBody.add(0, new int[] { head[0], head[1] + 1 });
-			checkOOB();
-			checkCollision();
-			if (alive == true) {
-				if (!gameBoard.getCell(head[0], head[1] + 1).hasFood()) {
-					gameBoard.getCell(tailTip).isLeaving();
-					snakeBody.remove(tipIndex);
-				} else {
-					ateFood = true;
-				}
+			newHead = new int[] { head[0], head[1] + 1 };
+		}
+		
+		// ====================== MOVE CODE ==========================
+		snakeBody.add(0, new int[] { newHead[0], newHead[1] });
+		checkOOB();
+		checkCollision();
+		if (alive == true) {
+			if (!gameBoard.getCell(newHead[0], newHead[1]).hasFood()) {
+				// set last cell to leaving
+				gameBoard.getCell(tailTip).isLeaving();
+				snakeBody.remove(tipIndex);
 			} else {
-				snakeBody.remove(0);
+				ateFood = true;
 			}
+		} else {
+			snakeBody.remove(0);
 		}
-		// ELSE if the Snake is trying to move in the opposite direction
-		// then keep going straight.
-		else {
-			if (next_direction == UP) {
-				snakeBody.add(0, new int[] { head[0] - 1, head[1] });
-				checkOOB();
-				checkCollision();
-				if (alive == true) {
-					if (!gameBoard.getCell(head[0] - 1, head[1]).hasFood()) {
-						gameBoard.getCell(tailTip).isLeaving();
-						snakeBody.remove(tipIndex);
-					} else {
-						ateFood = true;
-					}
-				} else {
-					snakeBody.remove(0);
-				}
-			} else if (next_direction == DOWN) {
-				snakeBody.add(0, new int[] { head[0] + 1, head[1] });
-				checkOOB();
-				checkCollision();
-				if (alive == true) {
-					if (!gameBoard.getCell(head[0] + 1, head[1]).hasFood()) {
-						gameBoard.getCell(tailTip).isLeaving();
-						snakeBody.remove(tipIndex);
-					} else {
-						ateFood = true;
-					}
-				} else {
-					snakeBody.remove(0);
-				}
-			} else if (next_direction == LEFT) {
-				snakeBody.add(0, new int[] { head[0], head[1] - 1 });
-				checkOOB();
-				checkCollision();
-				if (alive == true) {
-					if (!gameBoard.getCell(head[0], head[1] - 1).hasFood()) {
-						gameBoard.getCell(tailTip).isLeaving();
-						snakeBody.remove(tipIndex);
-					} else {
-						ateFood = true;
-					}
-				} else {
-					snakeBody.remove(0);
-				}
-			} else if (next_direction == RIGHT) {
-				snakeBody.add(0, new int[] { head[0], head[1] + 1 });
-				checkOOB();
-				checkCollision();
-				if (alive == true) {
-					if (!gameBoard.getCell(head[0], head[1] + 1).hasFood()) {
-						gameBoard.getCell(tailTip).isLeaving();
-						snakeBody.remove(tipIndex);
-					} else {
-						ateFood = true;
-					}
-				} else {
-					snakeBody.remove(0);
-				}
-			}
-		}
+		// ===========================================================
+		
 		while (ateFood) {
 			Cell cell = gameBoard.getRandomCellwithBoundaries();
 			if (cell.isEmpty() && !(cell.hasFood())) {

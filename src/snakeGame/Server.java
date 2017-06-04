@@ -32,6 +32,9 @@ public class Server {
 	LoginWindow loginWindow;
 	ScoreWindow scoreWindow;
 	
+	Timer t = new Timer();
+	TimerTask tt;
+	
 	/*
 	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the number of AI needed.
 	 */
@@ -60,8 +63,7 @@ public class Server {
 		// Then run the Worker thread pool to make the moves for real players.
 		// Update player score screen.
 		// Then check if there is either 1 snake alive, or all Players are dead.
-		Timer t = new Timer();
-		t.schedule(new TimerTask() {
+		tt = new TimerTask(){
 			public void run() {
 				try {
 					for (int i = 0; i < AIPlayerList.size(); i++) {
@@ -80,11 +82,19 @@ public class Server {
 				// in when just have 1 snake
 				if (checkLastPlayer() != null) {
 					System.out.println(checkLastPlayer().toString());
-					t.cancel();
-					
+					endGameLoop();
 				}
 			}
-		}, 0, 200);
+		};
+		t.schedule(tt, 0, 200);
+	}
+	
+	private void endGameLoop(){
+		tt.cancel();
+		//and then just in case:
+		t.cancel();
+		t.purge();
+		
 	}
 	
 	public void addSnakePlayer(int playerNumber) {
@@ -147,12 +157,12 @@ public class Server {
 		// 1 snake return that snake
 		if (alivePlayers == 0 || aliveSnake == 1) {
 			for (int j = 0; j < this.realPlayerList.size() - 1; j++) {
-				if (realPlayerList.get(j-1).alive) {
+				if (realPlayerList.get(j).alive) {
 					return realPlayerList.get(j);
 				}
 			}
 			for (int i = 0; i < AIPlayerList.size(); i++) {
-				if (AIPlayerList.get(i-1).alive) {
+				if (AIPlayerList.get(i).alive) {
 					return AIPlayerList.get(i);
 				}
 			}

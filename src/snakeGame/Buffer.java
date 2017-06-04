@@ -33,8 +33,9 @@ public class Buffer {
 			// Place the value in the buffer
 			B[InPtr] = value;
 			// print out a debug message
-			//System.out.println(" " + Thread.currentThread().getName() + " added " + value + " at " + InPtr
-					//+ " Count was= " + Count);
+			// System.out.println(" " + Thread.currentThread().getName() + "
+			// added " + value + " at " + InPtr
+			// + " Count was= " + Count);
 			// increment the pointer
 			// the pointer must wrap around to the start
 			InPtr = (InPtr + 1) % N;
@@ -52,7 +53,8 @@ public class Buffer {
 			// } catch (InterruptedException e) {}
 		} else {
 			int I = B[OutPtr];
-			// System.out.println(" " + Thread.currentThread().getName() + " removed " + I + " at " + OutPtr
+			// System.out.println(" " + Thread.currentThread().getName() + "
+			// removed " + I + " at " + OutPtr
 			// + " Count was= " + Count);
 			OutPtr = (OutPtr + 1) % N;
 			Count = Count - 1;

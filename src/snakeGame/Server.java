@@ -2,7 +2,6 @@
 package snakeGame;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,10 +15,10 @@ public class Server {
 	int aiPlayerCount;
 	
 	// creates Lists to store and keep track of various objects throughout the game
-	List<Buffer> playerBufferList = new ArrayList<Buffer>();
-	List<Snake> aiPlayerList = new ArrayList<Snake>();
-	List<Snake> realPlayerList = new ArrayList<Snake>();
-	List<Worker> workerList = new ArrayList<Worker>();
+	ArrayList<Buffer> playerBufferList = new ArrayList<Buffer>();
+	ArrayList<Snake> aiPlayerList = new ArrayList<Snake>();
+	ArrayList<Snake> realPlayerList = new ArrayList<Snake>();
+	ArrayList<Worker> workerList = new ArrayList<Worker>();
 	
 	// ThreadPools for the AI snakes and workers
 	ThreadPool aiPool;
@@ -38,13 +37,15 @@ public class Server {
 	// declares the Timer used as the primary Game loop.
 	// Timer was used because a traditional game-loop varies in actual time
 	// due to how long the code takes to complete.
-	// Timer is set to 200ms, which is far longer than any cycle of the game code will ever need.
+	// Timer is set to 200ms, which is far longer than any cycle of the game
+	// code will ever need.
 	// therefore it is safe.
 	Timer t = new Timer();
 	TimerTask tt;
 	
 	/*
-	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the number of AI needed.
+	 * Constructor to create a sever for the game. Handle most of the games activities. Passes the
+	 * number of AI needed.
 	 */
 	public Server() throws Exception {
 		
@@ -54,11 +55,13 @@ public class Server {
 		scoreWindow = new ScoreWindow(this);
 	}
 	
-	// runs the code necessary to get the game started.
+	/*
+	 * runs the code necessary to get the game started and begins a Timer to run the game loop..
+	 */
 	public void startGame(int AIPlayers) {
 		createSnakeAI(AIPlayers);
-		// tell the gameBoard to place Food randomly on the board.
-		// Food to Player ratio is 1:10, rounded up.
+		// tell the gameBoard to place Food randomly on the board based on Snake
+		// Count.
 		gameBoard.fillInitialFood(realPlayerList.size() + aiPlayerList.size());
 		scoreWindow.showScoreWindow();
 		gameWindow.showGameWindow();
@@ -80,7 +83,10 @@ public class Server {
 				catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				// update Score screen
 				scoreWindow.returnScore();
+				// update the gameboard
 				gameWindow.displayCellList();
 				
 				// Check if win conditions have been met.
@@ -123,7 +129,8 @@ public class Server {
 	 * Method to create all AI snakes.
 	 */
 	public void createSnakeAI(int AIPlayers) {
-		// creates and populates a thread pool for AI, as 100 running threads for AI would be too much overhead,
+		// creates and populates a thread pool for AI, as 100 running threads for AI would be too
+		// much overhead,
 		// so simulating this with a pool that does 10 concurrently is acceptable.
 		aiPool = new ThreadPool(10, AIPlayers);
 		// thread numbers start at 5 to accommodate for the (currently) 4 real-players
@@ -133,8 +140,9 @@ public class Server {
 	}
 	
 	/*
-	 * Check the number of living AI and Player snakes. return the final snake if only 1 is alive. or return any AI snake if all players are
-	 * dead. if there are 2+ players alive, or a player and AI, return null.
+	 * Check the number of living AI and Player snakes. return the final snake if only 1 is alive.
+	 * or return any AI snake if all players are dead. if there are 2+ players alive, or a player
+	 * and AI, return null.
 	 */
 	Snake checkLastPlayer() {
 		// see how many snakes are alive
@@ -164,7 +172,8 @@ public class Server {
 		if (alivePlayers > 1) {
 			return null;
 		}
-		// if only 1 snake is alive, or if all players are dead, return (one of) the remaining snake(s)
+		// if only 1 snake is alive, or if all players are dead, return (one of)
+		// the remaining snake(s)
 		if (alivePlayers == 0 || aliveSnake == 1) {
 			for (int j = 0; j < this.realPlayerList.size() - 1; j++) {
 				if (realPlayerList.get(j).alive) {

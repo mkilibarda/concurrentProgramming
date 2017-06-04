@@ -42,14 +42,11 @@ public class LoginWindow implements KeyListener {
 	private JLabel P4Label = new JLabel("Press 'P'");
 	private JLabel P41Label = new JLabel("Player Four: ");
 	
-	// private int[][] keyschemas;
 	private Server server;
 	
 	public LoginWindow(Server server) {
-		// this.keyschemas = server;
 		this.server = server;
 		frame = new JFrame("Log In Window");
-		// frame.setName("Log In Window");
 		frame.setBounds(450, 150, 475, 300);
 		frame.setLayout(new GridLayout(3, 0));
 		
@@ -166,13 +163,18 @@ public class LoginWindow implements KeyListener {
 		// Add actionListener, so when button is pressed it opens new window
 		startButton.addActionListener(new ActionListener() {
 			
-			@Override // Close current window, make new instance of new one and open it
+			@Override // Close current window, make new instance of new one and
+						// open it
 			public void actionPerformed(ActionEvent e) {
+				// IF the textbox has data, AND if the data is numeric, AND 1 or
+				// more player Snakes have been created.
 				if (panelBotTextField.getText().toString().length() > 0 && isNumeric(panelBotTextField)
 						&& server.realPlayerList.size() > 0) {
 					
 					AIPlayers = Integer.parseInt(panelBotTextField.getText().toString());
 					
+					// if the number of AI are not valid, reject input. ELSE,
+					// start the game.
 					if (AIPlayers > 100) {
 						JOptionPane.showMessageDialog(panelBot, "There can only be 100 AI Players.");
 						panelBotTextField.setText("");
@@ -180,8 +182,6 @@ public class LoginWindow implements KeyListener {
 						JOptionPane.showMessageDialog(panelBot, "There have to be more than 0 AI Players.");
 						panelBotTextField.setText("");
 					} else {
-						// System.out.println("AI Players: " + AIPlayers);
-						
 						server.startGame(AIPlayers);
 						frame.dispose();
 						
@@ -192,6 +192,10 @@ public class LoginWindow implements KeyListener {
 		
 		panelBot2.add(startButton);
 		
+		// once the user clicks on the textbox, the KeyListener will not pick up
+		// the "Login" values
+		// so the user must press tab twice to return focus to the background
+		// before adding more snakes.
 		JLabel panelBot3Label1 = new JLabel("*Press Tab 2x to be able to enter players again*");
 		panelBot3.add(panelBot3Label1);
 		panelBot.add(panelBot1);
@@ -200,6 +204,9 @@ public class LoginWindow implements KeyListener {
 		frame.add(panelBot, BorderLayout.SOUTH);
 	}
 	
+	/*
+	 * checks if the data in the PanelBoxTextField is numeric.
+	 */
 	public static boolean isNumeric(JTextField panelBotTextField) {
 		try {
 			int i = Integer.parseInt(panelBotTextField.getText().toString());
@@ -226,11 +233,11 @@ public class LoginWindow implements KeyListener {
 		labelReadyImage.setIcon(greenTick);
 		labelReadyImage.setIcon(greenTick);
 		
+		// depending on which button was pressed, create a snake with the
+		// corresponding control scheme.
 		switch (c) {
 			case KeyEvent.VK_UP:
-				// System.out.println("UP Event");
 				server.addSnakePlayer(1);
-				// playerOne = 1;
 				
 				panelMid1.removeAll();
 				panelMid1.add(P1Label);
@@ -239,14 +246,10 @@ public class LoginWindow implements KeyListener {
 				panelMid1.add(labelReadyImage);
 				panelMid1.repaint();
 				panelMid1.revalidate();
-				
 				break;
 			
 			case KeyEvent.VK_W:
-				// System.out.println("W EVENT");
 				server.addSnakePlayer(2);
-				
-				// playerTwo = 1;
 				
 				panelMid2.removeAll();
 				panelMid2.add(P2Label);
@@ -258,10 +261,7 @@ public class LoginWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_Y:
-				// System.out.println("Y EVENT");
 				server.addSnakePlayer(3);
-				
-				// playerThree = 1;
 				
 				panelMid3.removeAll();
 				panelMid3.add(P3Label);
@@ -273,10 +273,7 @@ public class LoginWindow implements KeyListener {
 				break;
 			
 			case KeyEvent.VK_P:
-				// System.out.println("P EVENT");
 				server.addSnakePlayer(4);
-				
-				// playerFour = 1;
 				
 				panelMid4.removeAll();
 				panelMid4.add(P4Label);
@@ -285,7 +282,6 @@ public class LoginWindow implements KeyListener {
 				panelMid4.add(labelReadyImage);
 				panelMid4.repaint();
 				panelMid4.revalidate();
-				
 				break;
 			
 			default:
@@ -298,38 +294,6 @@ public class LoginWindow implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		
 	}
-	
-	// public int getPlayerOne() {
-	// return playerOne;
-	// }
-	//
-	// public void setPlayerOne(int playerOne) {
-	// this.playerOne = playerOne;
-	// }
-	//
-	// public int getPlayerTwo() {
-	// return playerTwo;
-	// }
-	//
-	// public void setPlayerTwo(int playerTwo) {
-	// this.playerTwo = playerTwo;
-	// }
-	//
-	// public int getPlayerThree() {
-	// return playerThree;
-	// }
-	//
-	// public void setPlayerThree(int playerThree) {
-	// this.playerThree = playerThree;
-	// }
-	//
-	// public int getPlayerFour() {
-	// return playerFour;
-	// }
-	//
-	// public void setPlayerFour(int playerFour) {
-	// this.playerFour = playerFour;
-	// }
 	
 	public int getAIPlayers() {
 		return AIPlayers;

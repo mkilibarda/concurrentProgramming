@@ -1,16 +1,17 @@
-package snakeGame;
 
+package snakeGame;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 
 public class Snake implements Runnable {
+	
 	// Implementation of GameScreen, snake number and alive;
-	GameWindow gameW;
+	GameWindow gameWindow;
 	int snake_num;
 	boolean alive;
-	CellList screen;
+	CellList gameBoard;
 	
 	// snake score
 	int score = 0;
@@ -23,67 +24,72 @@ public class Snake implements Runnable {
 	public final static int DOWN = 2;
 	public final static int LEFT = 3;
 	public final static int RIGHT = 4;
+	// the snakes body is stored as X and Y int values, instead of direct Cell references.
+	// this is to keep some degree of separation between classes.
 	protected ArrayList<int[]> snakeBody = new ArrayList<int[]>();
 	
 	/*
 	 * Constructor to create Snake object
 	 */
-	public Snake(GameWindow gameW, int snake_num, CellList map) {
-		// this.server = server;
-		this.gameW = gameW;
+	public Snake(GameWindow gameWindow, int snake_num, CellList gameBoard) {
+		this.gameWindow = gameWindow;
 		this.snake_num = snake_num;
+		this.gameBoard = gameBoard;
 		alive = true;
-		screen = map;
+		
 		Random randomGenerator = new Random();
-		int randomDirection = randomGenerator.nextInt(3);
 		// set snake head position
-		int[] pos = map.getRandomCellwithBoundariesXY();
+		int[] pos = gameBoard.getRandomCellwithBoundariesXY();
 		snakeBody.add(new int[] { pos[1], pos[0] });
-		// System.out.println("HEad at: " + pos[0] + " " + pos[1]);
-		if (randomDirection == 0) {
+		
+		// Pick a random direction for the snake to spawn facing.
+		// generate the snake body piece by piece in the trailing direction form the
+		// direction the snake is facing.
+		int randomDirection = randomGenerator.nextInt(3) + 1;
+		if (randomDirection == 1) {
 			snakeBody.add(new int[] { pos[1] + 1, pos[0] });
 			snakeBody.add(new int[] { pos[1] + 2, pos[0] });
 			this.direction = UP;
 			this.next_direction = UP;
 			
-		} else if (randomDirection == 1) {
+		} else if (randomDirection == 2) {
 			snakeBody.add(new int[] { pos[1] - 1, pos[0] });
 			snakeBody.add(new int[] { pos[1] - 2, pos[0] });
 			this.direction = DOWN;
 			this.next_direction = DOWN;
 			
-		} else if (randomDirection == 2) {
+		} else if (randomDirection == 3) {
 			snakeBody.add(new int[] { pos[1], pos[0] + 1 });
 			snakeBody.add(new int[] { pos[1], pos[0] + 2 });
 			this.direction = LEFT;
 			this.next_direction = LEFT;
 			
-		} else if (randomDirection == 3) {
+		} else if (randomDirection == 4) {
 			snakeBody.add(new int[] { pos[1], pos[0] - 1 });
 			snakeBody.add(new int[] { pos[1], pos[0] - 2 });
 			this.direction = RIGHT;
 			this.next_direction = RIGHT;
 		}
-		
-		// snakeBody.add(new int[] { randomNum, 1 });
-		// this.direction = RIGHT;
-		// this.next_direction = RIGHT;
 		setSnake();
-		
-		// allLocation.add(new int[2] = {100,100});
 	}
 	
+	/*
+	 * set the Cell under the new HEAD position to be 'in Use'. Set the colour of the new Head Cell.
+	 */
 	public void setSnake() {
-		screen.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).beingUsed();
-		screen.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).setColor(snake_num);
+		gameBoard.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).beingUsed();
+		gameBoard.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).setColor(snake_num);
 		for (int i = 1; i < snakeBody.size(); i++) {
-			screen.getCell(snakeBody.get(i)[0], snakeBody.get(i)[1]).beingUsed();
+			gameBoard.getCell(snakeBody.get(i)[0], snakeBody.get(i)[1]).beingUsed();
 		}
 	}
 	
+	/*
+	 * remove all pieces from the snakes body.
+	 */
 	public void killSnake() {
 		for (int i = 0; i < snakeBody.size(); i++) {
-			screen.getCell(snakeBody.get(i)[0], snakeBody.get(i)[1]).isLeaving();
+			gameBoard.getCell(snakeBody.get(i)[0], snakeBody.get(i)[1]).isLeaving();
 		}
 	}
 	
@@ -91,6 +97,9 @@ public class Snake implements Runnable {
 		return snakeBody.size();
 	}
 	
+	/*
+	 * Check if the snake's new head is Out Of Bounds.
+	 */
 	public void checkOOB() {
 		if (snakeBody.get(0)[0] == 0 || snakeBody.get(0)[0] == 100 || snakeBody.get(0)[1] == 0
 				|| snakeBody.get(0)[1] == 100) {
@@ -98,21 +107,23 @@ public class Snake implements Runnable {
 		}
 	}
 	
+	/*
+	 * Check if the snake's new Head Cell is already being used.
+	 */
 	public void checkCollision() {
-		if (screen.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).isEmpty() == false) {
+		if (gameBoard.getCell(snakeBody.get(0)[0], snakeBody.get(0)[1]).isEmpty() == false) {
 			alive = false;
 		}
 	}
 	
 	public void move(int move) {
-		// System.out.println(snakeBody.get(0)[0] + "," + snakeBody.get(0)[1]);
 		// last node go to second last node spot
-		// System.out.println(move);
 		boolean ateFood = false;
 		int[] head = snakeBody.get(0);
 		int[] tailTip = snakeBody.get(snakeBody.size() - 1);
 		int tipIndex = snakeBody.size();
 		
+		// Snake is CHANGING DIRECTION to UP
 		if (move == 1 && direction != DOWN) {
 			// set direction of snake
 			this.direction = UP;
@@ -121,9 +132,9 @@ public class Snake implements Runnable {
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				if (!screen.getCell(head[0] - 1, head[1]).hasFood()) {
+				if (!gameBoard.getCell(head[0] - 1, head[1]).hasFood()) {
 					// set last cell to leaving
-					screen.getCell(tailTip).isLeaving();
+					gameBoard.getCell(tailTip).isLeaving();
 					snakeBody.remove(tipIndex);
 				} else {
 					ateFood = true;
@@ -131,14 +142,16 @@ public class Snake implements Runnable {
 			} else {
 				snakeBody.remove(0);
 			}
-		} else if (move == 2 && direction != UP) {
+		}
+		// Snake is CHANGING DIRECTION to DOWN
+		else if (move == 2 && direction != UP) {
 			this.direction = DOWN;
 			snakeBody.add(0, new int[] { head[0] + 1, head[1] });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				if (!screen.getCell(head[0] + 1, head[1]).hasFood()) {
-					screen.getCell(tailTip).isLeaving();
+				if (!gameBoard.getCell(head[0] + 1, head[1]).hasFood()) {
+					gameBoard.getCell(tailTip).isLeaving();
 					snakeBody.remove(tipIndex);
 				} else {
 					ateFood = true;
@@ -146,15 +159,16 @@ public class Snake implements Runnable {
 			} else {
 				snakeBody.remove(0);
 			}
-		} else if (move == 3 && direction != RIGHT) {
+		}
+		// Snake is CHANGING DIRECTION to LEFT
+		else if (move == 3 && direction != RIGHT) {
 			this.direction = LEFT;
-			
 			snakeBody.add(0, new int[] { head[0], head[1] - 1 });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				if (!screen.getCell(head[0], head[1] - 1).hasFood()) {
-					screen.getCell(tailTip).isLeaving();
+				if (!gameBoard.getCell(head[0], head[1] - 1).hasFood()) {
+					gameBoard.getCell(tailTip).isLeaving();
 					snakeBody.remove(tipIndex);
 				} else {
 					ateFood = true;
@@ -162,14 +176,16 @@ public class Snake implements Runnable {
 			} else {
 				snakeBody.remove(0);
 			}
-		} else if (move == 4 && direction != LEFT) {
+		}
+		// Snake is CHANGING DIRECTION to RIGHT
+		else if (move == 4 && direction != LEFT) {
 			this.direction = RIGHT;
 			snakeBody.add(0, new int[] { head[0], head[1] + 1 });
 			checkOOB();
 			checkCollision();
 			if (alive == true) {
-				if (!screen.getCell(head[0], head[1] + 1).hasFood()) {
-					screen.getCell(tailTip).isLeaving();
+				if (!gameBoard.getCell(head[0], head[1] + 1).hasFood()) {
+					gameBoard.getCell(tailTip).isLeaving();
 					snakeBody.remove(tipIndex);
 				} else {
 					ateFood = true;
@@ -177,14 +193,17 @@ public class Snake implements Runnable {
 			} else {
 				snakeBody.remove(0);
 			}
-		} else {
+		}
+		// ELSE if the Snake is trying to move in the opposite direction
+		// then keep going straight.
+		else {
 			if (next_direction == UP) {
 				snakeBody.add(0, new int[] { head[0] - 1, head[1] });
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					if (!screen.getCell(head[0] - 1, head[1]).hasFood()) {
-						screen.getCell(tailTip).isLeaving();
+					if (!gameBoard.getCell(head[0] - 1, head[1]).hasFood()) {
+						gameBoard.getCell(tailTip).isLeaving();
 						snakeBody.remove(tipIndex);
 					} else {
 						ateFood = true;
@@ -197,8 +216,8 @@ public class Snake implements Runnable {
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					if (!screen.getCell(head[0] + 1, head[1]).hasFood()) {
-						screen.getCell(tailTip).isLeaving();
+					if (!gameBoard.getCell(head[0] + 1, head[1]).hasFood()) {
+						gameBoard.getCell(tailTip).isLeaving();
 						snakeBody.remove(tipIndex);
 					} else {
 						ateFood = true;
@@ -211,8 +230,8 @@ public class Snake implements Runnable {
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					if (!screen.getCell(head[0], head[1] - 1).hasFood()) {
-						screen.getCell(tailTip).isLeaving();
+					if (!gameBoard.getCell(head[0], head[1] - 1).hasFood()) {
+						gameBoard.getCell(tailTip).isLeaving();
 						snakeBody.remove(tipIndex);
 					} else {
 						ateFood = true;
@@ -225,8 +244,8 @@ public class Snake implements Runnable {
 				checkOOB();
 				checkCollision();
 				if (alive == true) {
-					if (!screen.getCell(head[0], head[1] + 1).hasFood()) {
-						screen.getCell(tailTip).isLeaving();
+					if (!gameBoard.getCell(head[0], head[1] + 1).hasFood()) {
+						gameBoard.getCell(tailTip).isLeaving();
 						snakeBody.remove(tipIndex);
 					} else {
 						ateFood = true;
@@ -236,8 +255,8 @@ public class Snake implements Runnable {
 				}
 			}
 		}
-		while (ateFood){
-			Cell cell = screen.getRandomCellwithBoundaries();
+		while (ateFood) {
+			Cell cell = gameBoard.getRandomCellwithBoundaries();
 			if (cell.isEmpty() && !(cell.hasFood())) {
 				cell.placeFood();
 				this.score += 50;
@@ -249,16 +268,11 @@ public class Snake implements Runnable {
 		} else {
 			setSnake();
 		}
-		// testing puropose
-		// for(int i = 0; i < snakeBody.size();i++){
-		// //System.out.println(snakeBody.get(i)[0] + ", " + snakeBody.get(i)[1]);
-		// }
 		
 	}
 	
 	@Override
 	public void run() {
-		// System.out.println(Thread.currentThread().getName() + " thread started");
 	}
 	
 	public int getScore() {
@@ -268,17 +282,17 @@ public class Snake implements Runnable {
 	@Override
 	public String toString() {
 		if (this.snake_num == 1) {
-			return "yellow Win";
+			return "Player 1 Wins";
 		}
 		if (this.snake_num == 2) {
-			return "blue Win";
+			return "Player 2 Wins";
 		}
 		if (this.snake_num == 3) {
-			return "red Win";
+			return "Player 3 Wins";
 		}
 		if (this.snake_num == 4) {
-			return "green Win";
+			return "Player 4 Wins";
 		}
-		return "Snake AI win";
+		return "Snake AI wins";
 	}
 }

@@ -1,51 +1,49 @@
 
 package snakeGame;
 
-import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 
 
 public class GameWindow implements KeyListener, WindowListener {
 	
-	// private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 	private JFrame mainWindow;
+	private CellList gameBoard;
 	
-	private Server server;
-	
-	public GameWindow(Server server) {
-		this.server = server;
+	/*
+	 * Acts as the primary game screen that the players see and play the game from. Key events for
+	 * player snake movement are actually handled by keyeventListeneres in the snakes themselves
+	 */ public GameWindow(Server server) {
+		this.gameBoard = server.gameBoard;
 		this.mainWindow = new JFrame("Snake Game");
+		
+		// set the window position to top left and size to 1000x1000
 		mainWindow.setBounds(0, 0, 1000, 1000);
+		// set the grid to 100x100
+		mainWindow.setLayout(new GridLayout(100, 100, 1, 1));
 		
-		GridLayout gameBoard = new GridLayout(100, 100, 1, 1);
-		
+		// fill the grid with the JPanels stored within each Cell object
+		// within the CellList gameBoard.
+		// these JPanels also store the colors for the cells.
 		for (int v = 0; v < 100; v++) {
 			for (int h = 0; h < 100; h++) {
-				mainWindow.add(server.gameBoard.getCell(v, h).getCellPanel());
+				mainWindow.add(gameBoard.getCell(v, h).getCellPanel());
 			}
 		}
-		
-		mainWindow.setLayout(gameBoard);
-		
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/*
+	 * re-check the JPanels in each Cell object and update the screen with the correct colors
+	 */
 	public void displayCellList() {
 		mainWindow.revalidate();
 		mainWindow.repaint();
-		// mainWindow.setVisible(false);
-		// mainWindow.setVisible(true);
 		
 	}
 	
@@ -78,82 +76,6 @@ public class GameWindow implements KeyListener, WindowListener {
 				System.exit(0);
 				break;
 		}
-		//
-		// int c = e.getKeyCode();
-		//
-		// switch (c) {
-		//
-		// // ENTER PLAYERS
-		// case KeyEvent.VK_UP:
-		// System.out.println("Enter Player One: UP");
-		// server.addSnakePlayer(1);
-		//
-		// // playerOne = 1;
-		//
-		// break;
-		//
-		// case KeyEvent.VK_W:
-		// System.out.println("Enter Player Two: W");
-		// server.addSnakePlayer(2);
-		//
-		// // playerTwo = 1;
-		//
-		// break;
-		//
-		// case KeyEvent.VK_Y:
-		// System.out.println("Enter Player Three: Y");
-		// server.addSnakePlayer(3);
-		//
-		// // playerThree = 1;
-		//
-		// break;
-		//
-		// case KeyEvent.VK_P:
-		// System.out.println("Enter Player Four: P");
-		// server.addSnakePlayer(4);
-		//
-		// // playerFour = 1;
-		//
-		// break;
-		//
-		// // // EXIT PLAYERS
-		// // case KeyEvent.VK_1:
-		// // System.out.println("Exit Player One: 1");
-		// //
-		// // playerOne = 0;
-		// //
-		// // break;
-		// //
-		// // case KeyEvent.VK_2:
-		// // System.out.println("Exit Player Two: 2");
-		// //
-		// // playerTwo = 0;
-		// //
-		// // break;
-		// //
-		// // case KeyEvent.VK_3:
-		// // System.out.println("Exit Player Three: 3");
-		// //
-		// // playerThree = 0;
-		// //
-		// // break;
-		// //
-		// // case KeyEvent.VK_4:
-		// // System.out.println("Exit Player Four: 4");
-		// //
-		// // playerFour = 0;
-		// //
-		// // break;
-		// //
-		// // case KeyEvent.VK_ESCAPE:
-		// // System.out.println("Exit of Game Window");
-		// // System.exit(0);
-		// // break;
-		// //
-		// // default:
-		// // break;
-		// }
-		//
 	}
 	
 	public JFrame getMainFrame() {

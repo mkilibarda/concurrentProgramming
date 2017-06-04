@@ -2,14 +2,12 @@
 package snakeGame;
 
 import java.awt.Color;
-
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 
 
 public class Cell {
 	
-	private BlockingQueue taskQueue = null;
+	// private BlockingQueue taskQueue = null;
 	private boolean isEmpty = true;
 	private boolean hasFood = false;
 	private int x;
@@ -18,13 +16,13 @@ public class Cell {
 	private JPanel cellPanel;
 	
 	/*
-	 * Constructor for the Cell class Creates a queue for all the thread if thread has multiple threads running in it
+	 * Constructor for the Cell class Creates a queue for all the thread if thread has multiple
+	 * threads running in it
 	 */
 	public Cell(int x, int y) {
 		this.x = x;
 		this.y = y;
 		cellPanel = new JPanel();
-		// cellPanel.setBorder(new LineBorder(Color.orange, 1)); // Set cell's border
 		cellPanel.setBackground(Color.lightGray);
 	}
 	
@@ -36,16 +34,10 @@ public class Cell {
 		this.cellPanel = cellPanel;
 	}
 	
-	/*
-	 * Set the location of the x coordinates returns x
-	 */
 	public int getX() {
 		return x;
 	}
 	
-	/*
-	 * Set the location of the y coordinates returns y
-	 */
 	public int getY() {
 		return y;
 	}
@@ -54,11 +46,11 @@ public class Cell {
 		return isEmpty;
 	}
 	
-	public boolean hasFood(){
+	public boolean hasFood() {
 		return hasFood;
 	}
 	
-	public synchronized void placeFood(){
+	public synchronized void placeFood() {
 		hasFood = true;
 		cellPanel.setBackground(Color.magenta);
 	}
@@ -72,6 +64,9 @@ public class Cell {
 		cellPanel.setBackground(Color.darkGray);
 	}
 	
+	/*
+	 * sets the colour of the snake's HEAD to match the player number or AI.
+	 */
 	public void setColor(int playerNum) {
 		cellPanel.setBackground(Color.black);
 		if (playerNum == 1) {

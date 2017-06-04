@@ -9,7 +9,7 @@ public class SnakeAI extends Snake {
 	/*
 	 * Constructor for the Snake AI. Need to have the Gamescreen, the snake number(for testing Purpose).
 	 */
-	public SnakeAI(gameWindow gameW, int snake_num,CellList map) {
+	public SnakeAI(GameWindow gameW, int snake_num,CellList map) {
 		super(gameW, snake_num, map);
 		// TODO Auto-generated constructor stub
 	}

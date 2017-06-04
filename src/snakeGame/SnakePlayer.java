@@ -16,7 +16,7 @@ public class SnakePlayer extends Snake implements KeyListener {
 	 * the snake number(for testing Purpose) and the keys it will use
 	 * to move the snake.
 	 */
-	public SnakePlayer(gameWindow gameW, int snake_num,CellList map, int[] keys, Buffer playerBuffer) {
+	public SnakePlayer(GameWindow gameW, int snake_num,CellList map, int[] keys, Buffer playerBuffer) {
 		super(gameW, snake_num, map);
 		this.keys = keys;
 		// TODO Auto-generated constructor stub

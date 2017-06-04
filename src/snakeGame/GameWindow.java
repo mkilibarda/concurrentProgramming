@@ -16,14 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 
 
-public class gameWindow implements KeyListener, WindowListener {
+public class GameWindow implements KeyListener, WindowListener {
 	
 	// private int playerOne, playerTwo, playerThree, playerFour, AIPlayers = 0;
 	private JFrame mainWindow;
 	
 	private Server server;
 	
-	public gameWindow(Server server) {
+	public GameWindow(Server server) {
 		this.server = server;
 		this.mainWindow = new JFrame("Snake Game");
 		mainWindow.setBounds(0, 0, 1000, 1000);
@@ -32,7 +32,7 @@ public class gameWindow implements KeyListener, WindowListener {
 		
 		for (int v = 0; v < 100; v++) {
 			for (int h = 0; h < 100; h++) {
-				mainWindow.add(server.gameScreen.getCell(v, h).getCellPanel());
+				mainWindow.add(server.gameBoard.getCell(v, h).getCellPanel());
 			}
 		}
 		

@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
-public class logInWindow implements KeyListener {
+public class LoginWindow implements KeyListener {
 	
 	private JFrame frame;
 	private JPanel panelTop;
@@ -44,7 +44,7 @@ public class logInWindow implements KeyListener {
 	// private int[][] keyschemas;
 	private Server server;
 	
-	public logInWindow(Server server) {
+	public LoginWindow(Server server) {
 		// this.keyschemas = server;
 		this.server = server;
 		frame = new JFrame("Log In Window");
@@ -158,7 +158,7 @@ public class logInWindow implements KeyListener {
 			
 			@Override // Close current window, make new instance of new one and open it
 			public void actionPerformed(ActionEvent e) {
-				if (panelBotTextField.getText().toString().length() > 0 && isNumeric(panelBotTextField) && server.players.size() > 0) {
+				if (panelBotTextField.getText().toString().length() > 0 && isNumeric(panelBotTextField) && server.realPlayerList.size() > 0) {
 					
 					AIPlayers = Integer.parseInt(panelBotTextField.getText().toString());
 					

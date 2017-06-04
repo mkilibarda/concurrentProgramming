@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Snake implements Runnable {
 	// Implementation of GameScreen, snake number and alive;
-	gameWindow gameW;
+	GameWindow gameW;
 	int snake_num;
 	boolean alive;
 	CellList screen;
@@ -28,7 +28,7 @@ public class Snake implements Runnable {
 	/*
 	 * Constructor to create Snake object
 	 */
-	public Snake(gameWindow gameW, int snake_num, CellList map) {
+	public Snake(GameWindow gameW, int snake_num, CellList map) {
 		// this.server = server;
 		this.gameW = gameW;
 		this.snake_num = snake_num;

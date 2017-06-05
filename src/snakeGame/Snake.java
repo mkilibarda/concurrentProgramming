@@ -193,6 +193,6 @@ public class Snake implements Runnable {
 		if (this.snake_num == 4) {
 			return "Player 4 Wins";
 		}
-		return "Snake AI wins";
+		return "Snake AI Wins";
 	}
 }

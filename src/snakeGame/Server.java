@@ -92,12 +92,13 @@ public class Server {
 				// Check if win conditions have been met.
 				// if the game is ended, clear the timer.
 				if (checkLastPlayer() != null) {
-					System.out.println(checkLastPlayer().toString());
+//					System.out.println(checkLastPlayer().toString());
 					// cancel the TimerTask itself,
 					tt.cancel();
 					// and then just in case, clear and purge the Timer.
 					t.cancel();
 					t.purge();
+					gameWindow.EndDialog(checkLastPlayer().toString());
 				}
 			}
 		};

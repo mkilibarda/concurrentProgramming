@@ -92,13 +92,13 @@ public class Server {
 				// Check if win conditions have been met.
 				// if the game is ended, clear the timer.
 				if (checkLastPlayer() != null) {
-//					System.out.println(checkLastPlayer().toString());
+					// System.out.println(checkLastPlayer().toString());
 					// cancel the TimerTask itself,
 					tt.cancel();
 					// and then just in case, clear and purge the Timer.
 					t.cancel();
 					t.purge();
-					gameWindow.EndDialog(checkLastPlayer().toString());
+					gameWindow.EndDialog(checkLastPlayer());
 				}
 			}
 		};
@@ -145,7 +145,7 @@ public class Server {
 	 * or return any AI snake if all players are dead. if there are 2+ players alive, or a player
 	 * and AI, return null.
 	 */
-	Snake checkLastPlayer() {
+	String checkLastPlayer() {
 		// see how many snakes are alive
 		int aliveSnake = 0;
 		int alivePlayers = 0;
@@ -170,24 +170,25 @@ public class Server {
 		System.out.println();
 		System.out.println();
 		
-		if (alivePlayers > 1) {
+		if (alivePlayers > 1 || (alivePlayers == 1 && aliveAI > 0)) {
 			return null;
 		}
 		// if only 1 snake is alive, or if all players are dead, return (one of)
 		// the remaining snake(s)
 		if (alivePlayers == 0 || aliveSnake == 1) {
-			for (int j = 0; j < this.realPlayerList.size() - 1; j++) {
+			System.out.println("End Game");
+			for (int j = 0; j < this.realPlayerList.size(); j++) {
 				if (realPlayerList.get(j).alive) {
-					return realPlayerList.get(j);
+					return realPlayerList.get(j).toString();
 				}
 			}
 			for (int i = 0; i < aiPlayerList.size(); i++) {
 				if (aiPlayerList.get(i).alive) {
-					return aiPlayerList.get(i);
+					return aiPlayerList.get(i).toString();
 				}
 			}
 		}
-		return null;
+		return "Draw";
 	}
 	
 	/**

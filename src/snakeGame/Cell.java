@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 public class Cell {
 	
-	// private BlockingQueue taskQueue = null;
 	private boolean isEmpty = true;
 	private boolean hasFood = false;
 	private int x;

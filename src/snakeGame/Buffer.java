@@ -24,20 +24,10 @@ public class Buffer {
 	public synchronized void append(int value) {
 		// If the buffer is full we cannot append to it
 		if (Count == N) {
-			// block this thread because the buffer is full
-			// try {
-			// this.wait();
-			// } catch (InterruptedException e) {
-			// }
+			
 		} else {
 			// Place the value in the buffer
 			B[InPtr] = value;
-			// print out a debug message
-			// System.out.println(" " + Thread.currentThread().getName() + "
-			// added " + value + " at " + InPtr
-			// + " Count was= " + Count);
-			// increment the pointer
-			// the pointer must wrap around to the start
 			InPtr = (InPtr + 1) % N;
 			// Update the count
 			Count = Count + 1;
@@ -49,13 +39,8 @@ public class Buffer {
 	public synchronized int take() {
 		if (Count == 0) {
 			return 0;
-			// try { wait();
-			// } catch (InterruptedException e) {}
 		} else {
 			int I = B[OutPtr];
-			// System.out.println(" " + Thread.currentThread().getName() + "
-			// removed " + I + " at " + OutPtr
-			// + " Count was= " + Count);
 			OutPtr = (OutPtr + 1) % N;
 			Count = Count - 1;
 			notifyAll();

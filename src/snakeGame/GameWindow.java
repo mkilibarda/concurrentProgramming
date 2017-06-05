@@ -55,7 +55,7 @@ public class GameWindow implements KeyListener, WindowListener {
 	
 	public void EndDialog(String winner) {
 		JPanel panelBot = new JPanel(new GridLayout(3, 0));
-		int input = JOptionPane.showOptionDialog(panelBot, winner, "Game Over", JOptionPane.OK_CANCEL_OPTION,
+		int input = JOptionPane.showOptionDialog(panelBot, winner, "Game Over", JOptionPane.OK_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, null, null);
 		if (input == JOptionPane.OK_OPTION) {
 			System.exit(0);
